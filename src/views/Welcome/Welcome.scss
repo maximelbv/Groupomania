@@ -1,0 +1,61 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.Welcome {
+    color: $maintxtColor;
+    width: 100%;
+    .content {
+        display: flex;
+        flex-direction: column;
+        @media screen and (min-width: 1024px) {
+            flex-direction: row;
+        }
+
+        .hero {
+            align-self: center;
+            &Txt{
+                font-size: $fontSizeXXL;
+                & span {color: $mainColor}
+            }
+            &Subtxt {
+                line-height: 32px;
+                letter-spacing: .5px;
+                margin: 40px 0;
+                width: 65%;
+                color: $secondarytxtColor;
+                font-size: $fontSizeM;
+            }
+            
+            .signup {
+                background: linear-gradient(180deg, rgba(86,154,233,1) 0%, rgba(86,154,233,0.8) 100%);
+                font-size: $fontSizeM;
+                border: none;
+                border-radius: 6px;
+                color: $maintxtColor;
+                padding: 20px 100px;
+            }
+
+            .login {
+                margin-top: 15px;
+                letter-spacing: .5px;
+                color: $secondarytxtColor;
+                & a {
+                    cursor: pointer;
+                    color: $mainColor;
+
+                }
+            }
+
+        }
+
+        .illustration {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            & img {
+                width: 400px;
+            }
+        }
+
+    }
+}

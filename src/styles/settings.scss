@@ -1,0 +1,13 @@
+@import './fonts';
+
+* {
+    margin: 0;
+    font-family: $mainFont;
+}
+
+body {
+    background: linear-gradient(90deg, rgba(6,21,47,1) 0%, rgba(6,21,47,0.9360119047619048) 77%, rgba(6,21,47,0.9248074229691877) 100%);
+    max-width: 1440px;
+    margin: auto;
+    height: 100vh;
+}
