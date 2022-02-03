@@ -5,38 +5,65 @@
     color: $maintxtColor;
     width: 100%;
     .content {
+        margin: 0 30px;
         display: flex;
-        flex-direction: column;
-        @media screen and (min-width: 1024px) {
+        flex-direction: column-reverse;
+
+        @media screen and (min-width: 769px) {
             flex-direction: row;
         }
 
         .hero {
             align-self: center;
+            text-align: center;
+
+            @media screen and (min-width: 420px) {
+                text-align: start;
+            }
+
             &Txt{
-                font-size: $fontSizeXXL;
+                font-size: $fontSizeL;
                 & span {color: $mainColor}
+
+                @media screen and (min-width: 880px) {
+                font-size: $fontSizeXL;
+                }
+
+                @media screen and (min-width: 1024px) {
+                font-size: $fontSizeXXL;
+                }
+
             }
             &Subtxt {
                 line-height: 32px;
                 letter-spacing: .5px;
                 margin: 40px 0;
-                width: 65%;
                 color: $secondarytxtColor;
-                font-size: $fontSizeM;
+                font-size: $fontSizeS;
+
+                @media screen and (min-width: 1024px) {
+                    width: 65%;
+                }
+
             }
             
             .signup {
                 background: linear-gradient(180deg, rgba(86,154,233,1) 0%, rgba(86,154,233,0.8) 100%);
-                font-size: $fontSizeM;
+                font-size: $fontSizeS;
                 border: none;
                 border-radius: 6px;
                 color: $maintxtColor;
                 padding: 20px 100px;
+                width: 100%;
+
+                @media screen and (min-width: 454px) {
+                    width: auto;
+                }
             }
 
             .login {
                 margin-top: 15px;
+                margin-bottom: 30px;
                 letter-spacing: .5px;
                 color: $secondarytxtColor;
                 & a {
@@ -49,11 +76,26 @@
         }
 
         .illustration {
+            margin: 5% 0 10% 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             & img {
-                width: 400px;
+                width: 60%;
+            }
+
+            .reflect {
+                display: none;
+            }
+
+            @media screen and (min-width: 769px) {
+                margin: 0;
+                & img {
+                    width: 90%;
+                }
+                .reflect {
+                    display: block;
+                }
             }
         }
 
