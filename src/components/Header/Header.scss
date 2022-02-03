@@ -5,6 +5,10 @@
     height: 100px;
     width: 100%;
     display: flex;
+    justify-content: center;
+    @media screen and (min-width: 769px) {
+        justify-content: flex-start;
+    }
 
     .logo {
         margin-left: 30px;

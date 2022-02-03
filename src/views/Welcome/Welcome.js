@@ -24,7 +24,7 @@ const Welcome = () => {
                 </div>
 
                 <div className='illustration'>
-                    <img src={illustration} alt='illustration Groupomania'/>
+                    <img className='square' src={illustration} alt='illustration Groupomania'/>
                     <img className='reflect' src={illustrationReflect} alt='illustration Groupomania reflet'/>
                 </div>
 

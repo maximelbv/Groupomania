@@ -1,5 +1,6 @@
 @import '../../styles/colors.scss';
 @import '../../styles/fonts.scss';
+@import '../../styles/animations.scss';
 
 .Welcome {
     color: $maintxtColor;
@@ -48,6 +49,7 @@
             }
             
             .signup {
+                cursor: pointer;
                 background: linear-gradient(180deg, rgba(86,154,233,1) 0%, rgba(86,154,233,0.8) 100%);
                 font-size: $fontSizeS;
                 border: none;
@@ -84,8 +86,14 @@
                 width: 60%;
             }
 
+            .square {
+                @include floatAnimation;
+            }
+
             .reflect {
                 display: none;
+                margin-top: 25px;
+                @include reverseFloatAnimation;
             }
 
             @media screen and (min-width: 769px) {
