@@ -5,7 +5,7 @@
 form {
     letter-spacing: .5px;
     margin: auto;
-    padding: 50px;
+    padding: 0px;
 }
 
 legend {
@@ -29,11 +29,11 @@ input {
     font-weight: 600;
     background: #e9e9e9;
     font-size: $fontSizeXS;
-    padding: 10px;
+    padding: 10px 0 10px 10px;
     margin-top: 10px;
     border-radius: 5px;
     border:none;
-    width: 100%;
+    width: 97%;
     @include focusBorders;
 }
 

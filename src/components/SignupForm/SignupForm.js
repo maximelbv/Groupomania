@@ -1,11 +1,17 @@
 import React from 'react';
 import './SignupForm.scss'
 import '../../styles/forms.scss'
+import logo from '../../assets/img/icon-left-font-monochrome-black.svg';
 
 const Singup = () => {
     return (
         <div className='signupCtn'>
+        
+            <img className ='logoMobile' src={logo}></img>
+            
             <form className='SignupForm'>
+
+
                 <legend className='legend'>Inscription</legend>
 
                 <label className='prenom'>Prénom 

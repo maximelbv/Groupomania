@@ -11,36 +11,38 @@
     width: auto;
     height: auto;
     @include flexCenter;
+    flex-direction: column;
+}
+
+.logoMobile {
+    width: 250px;
+    margin: 50px 0;
 }
 
 .SignupForm {  
-    width: 400px;
+    width: 90%;
+    margin: 0 20px;
     display: grid;
     grid-column-gap: 40px;
     grid-row-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas: 
         "legend legend"
-        "prenom nom"
+        "prenom prenom"
+        "nom nom"
         "email email"
         "password password"
         "agreeTerms agreeTerms"
         "submit ."
     ;
 
-    input {
-        &:focus {
-            transition: 200ms ease-in-out forwards;
-            border: 2 px solid $secondaryColor;
-        }
-    }
 
     .legend {
         grid-area: legend;
         &::after {
             content: '';
             display: block;
-            width: 400px;
+            width: 100%;
             height: 1px;
             background: rgba(128, 128, 128, 0.164);
             margin-top: 30px;
@@ -57,7 +59,7 @@
             margin-left: 18px;
             font-size: $fontSizeXS;
             font-weight: 500;
-            letter-spacing: 0;
+            letter-spacing: .1;
         }
         & input {
             position: absolute;
@@ -78,7 +80,27 @@
 
 }
 
+@media screen and (min-width: 769px) {
+
+    .SignupForm {
+        width: 400px;
+        grid-template-areas: 
+            "legend legend"
+            "prenom nom"
+            "email email"
+            "password password"
+            "agreeTerms agreeTerms"
+            "submit ."
+        ;
+    }
+}
+
 @media screen and (min-width: 1024px) {
+
+    .logoMobile {
+        display: none;
+    }
+
     .signupCtn {
         margin-left: 515px;
         height: 100%;
