@@ -1,27 +1,57 @@
 @import '../../styles/colors';
 @import '../../styles/fonts';
+@import '../../styles/mixins';
 
 .Header {
-    height: 100px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 50px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    @media screen and (min-width: 769px) {
-        justify-content: flex-start;
-    }
+    background: white;
 
-    .logo {
-        margin-left: 30px;
-        color: $maintxtColor;
-        text-decoration: none;
-        letter-spacing: 3px;
-        font-weight: 600;
-        font-size: $fontSizeM;
-        display: flex;
-        align-items: center;
-        &Img {
-            width: 50px;
-            margin-right: 10px;
+    .headerContainer {
+        
+        @include flexCenter;
+        justify-content: space-between;
+        height: 100%;
+        max-width: 1440px;
+        margin: auto;
+
+        .logo {
+            margin-left: 20px;
+            @include btn;
+            letter-spacing: 2px;
+            padding: 4px;
+            font-size: $fontSizeXS;
+            background: $mainTxtColor;
+            &Img {
+                width: 25px;
+                margin-right: 5px;
+            }
+        }
+
+        .loginSignupBtns {
+            @include flexCenter;
+            margin-right: 20px;
+            & * {
+                margin-left: 5px;
+            }
+
+            .signup {
+                @include btn;
+            }
+    
+            .login {
+                @include btn;
+                background: none;
+                color: $mainTxtColor;
+                &:hover {
+                    color: white;
+                    background: $mainColor;
+                }
+            }
         }
     }
+
 }
