@@ -1,18 +1,25 @@
 import React from 'react';
 import './SignupForm.scss'
 import '../../styles/forms.scss'
-import logo from '../../assets/img/icon-left-font-monochrome-black.svg';
+import shape from '../../assets/img/Shape.svg';
 
 const Singup = () => {
     return (
         <div className='signupCtn'>
         
-            <img className ='logoMobile' src={logo}></img>
+            
+            <div className='headerMobile'>
+                <h1>Groupomania</h1>
+            </div>
+
+            <img className ='logoIllustration' src={shape}></img>
             
             <form className='SignupForm'>
 
 
                 <legend className='legend'>Inscription</legend>
+
+                <p className='alreadyMember'>Déjà membre ? <a href='/login'>Connexion</a></p>
 
                 <label className='prenom'>Prénom 
                     <input type='text'></input>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Home from "./views/Home/Home";
 import NotFound from "./views/NotFound/NotFound";
 import Signup from './views/Signup/Signup';
+import Login from './views/Login/Login';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path = "/" element={<Home />}/>
         <Route path = "signup" element={<Signup />}/>
+        <Route path = "login" element={<Login />}/>
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
