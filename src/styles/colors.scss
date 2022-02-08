@@ -1,10 +1,15 @@
 $mainColor: rgb(86, 154, 233);
+$mainColorLighter: rgba(86, 154, 233, .2);
 $mainColorDarker: rgb(45, 80, 119);
 $secondaryColor: #E9C056;
 
 $mainTxtColor : rgb(39, 39, 39);
+$secondaryTxtColor: #909090;
+
 $mainLightTxtColor : white;
 $secondaryLightTxtColor : rgba(255,255,255,.6);
 
 $lightBg: #f2f2f2;
 $darkBg: linear-gradient(90deg, rgba(6,21,47,1) 0%, rgba(6,21,47,0.95) 77%, rgba(6,21,47,0.97) 100%) no-repeat;
+
+$greyBorder : #DDDDDD;

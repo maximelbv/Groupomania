@@ -4,6 +4,21 @@ import './Header.scss';
 import logo from '../../assets/img/icon.svg'
 
 const Header = () => {
+
+    // Close the dropdown menu if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropDownTrigger')) {
+            var dropdowns = document.getElementsByClassName("userSettings");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
     return (
         <div className='Header'>
             <div className='headerContainer'>
@@ -13,9 +28,20 @@ const Header = () => {
                     <p className='logotxt'>Groupomania</p>
                 </a>
 
-                <div className='loginSignupBtns'>
-                    <Link to="/login" className='login'>Connexion</Link>
-                    <Link to="/signup" className='signup'>Inscription</Link>
+
+                <div className='dropDown'>
+
+                    <button onClick={() => {document.getElementById('userSettings').classList.toggle('show')}} className='dropDownTrigger'></button>
+                    
+                    <div className='userSettings' id='userSettings'>
+                        <a className="user" href="#">
+                            <p className='name'>John Doe</p>
+                            <p className='nickname'>@JohnDoe</p>
+                        </a>
+                        <a className='settings' href="#">Paramètres</a>
+                        <a className='logout' href="#">Déconnexion</a>
+                    </div>
+
                 </div>
 
             </div>

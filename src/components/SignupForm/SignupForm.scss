@@ -55,7 +55,7 @@
     .alreadyMember {
         grid-area: member;
         font-size: $fontSizeXXS;
-        color: grey;
+        color: $secondaryTxtColor;
         margin-top: -10px;
         margin-left: 2px;
         & a {color: $mainColor;}
@@ -118,6 +118,10 @@
 }
 
 @media screen and (min-width: 1024px) {
+
+    .logoIllustration {
+        margin-top: -150px;
+    }
 
     .headerMobile {
         display: none;

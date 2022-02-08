@@ -31,27 +31,71 @@
             }
         }
 
-        .loginSignupBtns {
-            @include flexCenter;
+        .dropDown {
             margin-right: 20px;
-            & * {
-                margin-left: 5px;
+            position: relative;
+            .dropDownTrigger {
+                @include flexCenter;
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                border-radius: 50px;
+                border: none;
+                background: grey;
             }
 
-            .signup {
-                @include btn;
-            }
-    
-            .login {
-                @include btn;
-                background: none;
-                color: $mainTxtColor;
-                &:hover {
-                    color: white;
-                    background: $mainColor;
+            .userSettings {
+                width: 200px;
+                border: 1px solid $greyBorder;
+                border-radius: 5px;
+                background: white;
+                position: absolute;
+                right: 0;
+                top: 50px;
+                @include flexCenter;
+                align-items: flex-start;
+                flex-direction: column;
+                display: none;
+                & a {
+                    border-radius: 5px;
+                    font-size: $fontSizeXS;
+                    width: 80%;
+                    color: $mainTxtColor;
+                    display: block;
+                    padding: 8px 14px;
+                    margin: 6px;
+                    text-decoration: none;
+                    &:hover {
+                        background: $mainColorLighter;
+                        color: $mainColorDarker;
+                        text-decoration: underline;
+                    }
                 }
+
+                .user {
+                    padding-bottom: 0;
+                    .name {font-weight: 600;}
+                    .nickname {
+                        color: $secondaryTxtColor;
+                        font-size: 11px;
+                    }
+                    &::after {
+                        content: '';
+                        display: block;
+                        width: 100%;
+                        height: 1px;
+                        background: rgba(128, 128, 128, 0.164);
+                        margin-top: 10px;
+                    }
+                }
+
+
             }
         }
+
+
     }
+
+    .show {display: flex !important;}
 
 }
