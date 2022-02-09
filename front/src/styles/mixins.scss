@@ -1,0 +1,34 @@
+@import './colors.scss';
+
+@mixin btn {
+    text-decoration: none;
+    background: $mainColor;
+    color: $mainLightTxtColor;
+    border-radius: 5px;
+    padding: 10px;
+    letter-spacing: 1px;
+    font-size: 12px;
+    @include flexCenter;
+}
+
+@mixin flexCenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin focusBorders {
+    &:focus {
+        outline: none;
+        background: none;
+        border: 1px solid $mainColor;
+    }
+}
+
+@mixin focusUnderline {
+    &:focus {
+        outline: none;
+        background: none;
+        text-decoration: underline 1px solid $mainColor;
+    }
+}

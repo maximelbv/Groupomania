@@ -1,0 +1,101 @@
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+@import '../../styles/animations.scss'; 
+@import '../../styles/mixins';
+
+
+.loginCtn {
+    width: auto;
+    height: auto;
+    @include flexCenter;
+    flex-direction: column;
+}
+
+.headerMobile {
+    @include flexCenter;
+    width: 100%;
+    height: 75px;
+    background: white;
+    & h1 {
+        display: block;
+        font-size: $fontSizeS;
+        color: white;
+        background: $mainTxtColor;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+}
+
+.logoIllustration {
+    @include floatAnimation;
+    width: 150px;
+    margin: 30px 0 50px 0;
+}
+
+.LoginForm {  
+    width: 90%;
+    margin: 0 20px;
+    display: grid;
+    grid-column-gap: 40px;
+    grid-row-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+        "legend legend"
+        "notAMember notAMember"
+        "email email"
+        "password password"
+        "submit ."
+    ;
+
+    .legend {grid-area: legend;}
+    .notAMember {
+        grid-area: notAMember;
+        font-size: $fontSizeXXS;
+        color: grey;
+        margin-top: -10px;
+        margin-left: 2px;
+        & a {color: $mainColor;}
+        &::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: rgba(128, 128, 128, 0.164);
+            margin-top: 30px;
+        }
+    }
+    .email {grid-area: email;}
+    .password {grid-area: password;}
+    .submit {
+        cursor: pointer;
+        @include btn;
+        background: $secondaryColor;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        font-size: $fontSizeXS; 
+    }
+
+}
+
+@media screen and (min-width: 769px) {
+
+    .LoginForm {
+        width: 400px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+
+    .logoIllustration {
+        margin-top: -150px;
+    }
+
+    .headerMobile {
+        display: none;
+    }
+
+    .loginCtn {
+        margin-left: 515px;
+        height: 100%;
+    }
+}
