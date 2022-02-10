@@ -1,17 +1,37 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-import db from '../db.js';
+import pkg from '@prisma/client';
+const { PrismaClient } = pkg;
 
-dotenv.config();
+const prisma = new PrismaClient();
 
-// console.log(db);
+export async function signupPost(req, res) {
 
-export function signupPost(req, res) {
-    let sql = `INSERT INTO user (firstName, lastName, email, password) VALUES ('${req.query.firstName}', '${req.query.lastName}', '${req.query.email}', '${req.query.password}')`;
-    db.query(sql, err => {
-    if (err){throw err}
-    return res.send('user created');
-    })
+    const { userId, firstName, lastName, email, isAdmin } = req.query
 
+    bcrypt.hash(req.query.password, 10)
+        .then(async (hash) => {
+            const result = await prisma.employee.create({
+                data: {
+                    userId,
+                    firstName,
+                    lastName,
+                    email,
+                    password: hash,
+                    isAdmin,
+                }
+            })
+            res.json(result)
+        
+            .catch((e) => {throw e})
+        
+            .finally(async () => {
+                await prisma.$disconnect()
+            })
+        });
+}
+
+
+export function loginPost(req, res) {
+   
 }
