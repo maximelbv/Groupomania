@@ -48,3 +48,11 @@ a {
     cursor: pointer;
     @include focusUnderline;
 }
+
+.invalidInput{
+    border: 1px solid red;
+}
+
+.validInput {
+    border: 1px solid green;
+}
