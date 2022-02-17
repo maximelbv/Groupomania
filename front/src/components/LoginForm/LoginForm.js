@@ -1,36 +1,37 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
+import ReactDOM from 'react-dom'
 import './LoginForm.scss';
 import '../../styles/forms.scss'
 import shape from '../../assets/img/Shape.svg';
+import axios from 'axios';
+import validationGif from '../../assets/img/validation_anim.gif';
 
 const Loginform = () => {
 
-    function sendLogin() {
-
-        
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(login)
-        };
+        let navigate = useNavigate();
         
         let login = {
-            email: document.getElementById('email').value,
-            password: document.getElementById('password').value
+            email: '',
+            password: ''
         }
 
-        fetch('http://localhost:8080/api/auth/login', requestOptions)
-            .then(response => {
-                let statusMessage = document.createElement('p').innerText(`${response.msg}`)
-                document.querySelector('.LoginForm').appendChild(statusMessage);
-                localStorage.setItem('userToken', JSON.stringify(response))
-                window.location.assign('/')
-            })
-
-    }
+        let connection = () => {
+            return axios.post('http://localhost:8080/api/auth/login', login)
+                .then((res) => {
+                    if (res.data.msg === 'Login success') {
+                        localStorage.setItem('userToken', res.data.token);
+                        const element = <div id='validationGif'><img src={validationGif} width="250px"/><p><span className='bonjour'>Bonjour</span><br/><span className='user'>User</span></p></div>
+                        
+                        ReactDOM.render(element, document.getElementById('loginCtn'));
+                        setTimeout(() => {navigate("/");}, 2000)
+                    }
+                })
+                .catch(err => console.log(err))
+        }
 
     return (
-        <div className='loginCtn'>
+        <div className='loginCtn' id='loginCtn'>
     
         
         <div className='headerMobile'>
@@ -39,7 +40,7 @@ const Loginform = () => {
         
         <img className ='logoIllustration' src={shape}></img>
         
-        <form className='LoginForm' onSubmit={sendLogin}>
+        <form className='LoginForm' id='loginForm'>
 
 
             <legend className='legend'>Connexion</legend>
@@ -47,15 +48,15 @@ const Loginform = () => {
             <p className='notAMember'>Vous n'avez pas de compte ? <a href='/signup'>Inscription</a></p>
 
             <label className='email'>Email 
-                <input id='email' type='email'></input>
+                <input id='email' type='email' defaultValue={login.email} onChange={e => login.email = e.target.value}></input>
             </label>
 
             
             <label className='password'>Mot de passe 
-                <input id='password' type='password'></input>
+                <input id='password' type='password' defaultValue={login.password} onChange={e => login.password = e.target.value}></input>
             </label>
 
-            <input className='submit' type='submit' value="Connexion"></input>
+            <input className='submit' onClick={connection} type='button' value="Connexion"></input>
 
         </form>
     </div>

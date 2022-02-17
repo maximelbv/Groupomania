@@ -77,6 +77,20 @@
 
 }
 
+#validationGif {
+    width: 100%;
+    height: 100vh;
+    @include flexCenter;
+    flex-direction: column;
+    & p {
+        font-size: 30px;
+        text-align: center;
+        @include textDisplayAnim;
+        .bonjour {@include textDisplayAnim};
+        .user {@include textDisplayAnimDelayed};
+    }
+}
+
 @media screen and (min-width: 769px) {
 
     .LoginForm {

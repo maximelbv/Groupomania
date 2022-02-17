@@ -6,6 +6,6 @@ import * as authControllers from '../controllers/auth.controllers.js';
 
 router.post('/signup', authControllers.signupPost);
 
-// router.post('/login', authControllers.loginPost);
+router.post('/login', authControllers.loginPost);
 
-export default router;
+export default router; 

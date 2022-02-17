@@ -51,20 +51,20 @@ const SignupForm = () => {
                 <p className='alreadyMember'>Déjà membre ? <a href='/login'>Connexion</a></p>
 
                 <label className='prenomLabel' >Prénom 
-                    <input id='prenom' type='text' defaultValue={info.firstName} onInput={e => info.firstName = e.target.value}></input>
+                    <input id='prenom' type='text' defaultValue={info.firstName} onChange={e => info.firstName = e.target.value}></input>
                 </label>
 
                 <label className='nomLabel' >Nom 
-                    <input id='nom' type='text' defaultValue={info.lastName} onInput={e => info.lastName = e.target.value} ></input>
+                    <input id='nom' type='text' defaultValue={info.lastName} onChange={e => info.lastName = e.target.value} ></input>
                 </label>
 
                 <label className='emailLabel' >Email 
-                    <input id='email' type='email' defaultValue={info.email} onInput={e => info.email = e.target.value} ></input>
+                    <input id='email' type='email' defaultValue={info.email} onChange={e => info.email = e.target.value} ></input>
                 </label>
 
                 
                 <label className='passwordLabel' >Mot de passe 
-                    <input id='password' type='password' defaultValue={info.password} onInput={e => info.password = e.target.value} ></input>
+                    <input id='password' type='password' defaultValue={info.password} onChange={e => info.password = e.target.value} ></input>
                 </label>
 
                 <div className='agreeTerms'>      

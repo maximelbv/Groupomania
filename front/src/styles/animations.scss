@@ -29,3 +29,41 @@
         }
     }
 }
+
+@mixin textDisplayAnim {
+
+    animation: textDisplayAnim 800ms ease-in-out forwards;
+
+    @keyframes textDisplayAnim {
+        0% {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+}
+
+@mixin textDisplayAnimDelayed {
+
+    animation: textDisplayAnimDelayed 800ms ease-in-out forwards 300ms;
+
+    @keyframes textDisplayAnimDelayed {
+        0% {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0px);
+        }
+    }
+}
