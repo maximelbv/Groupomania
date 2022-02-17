@@ -1,11 +1,13 @@
 import express from 'express';
-import authRoutes from './routes/auth.js';
+import authRoutes from './routes/auth.routes.js';
 
-// express app creation
 const app = express();
+// expressApp.use(helmet());
+// expressApp.use(methodOverride());
 
+app.use(express.urlencoded({extended: true}));
 
-// CORS middleware (Cross-origin resource sharing) - allow  front & back ports compatibility
+// CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -13,7 +15,7 @@ app.use((req, res, next) => {
     next();
 });
 
-// recognize incoming request objects as JSON objects
+// body parser
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);

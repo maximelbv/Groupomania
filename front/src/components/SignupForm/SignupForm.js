@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import './SignupForm.scss'
 import '../../styles/forms.scss'
 import shape from '../../assets/img/Shape.svg';
+import axios from 'axios';
 
 
 // ❗️ data validation avec regex
@@ -9,30 +11,26 @@ import shape from '../../assets/img/Shape.svg';
 // ❗️ redirection vers la page d'accueil quand réussite
 // ❗️ display des erreures 
 
-const Signup = () => {
+const SignupForm = () => {
 
-    function setAccount() { 
-        
-        let account = {
-            firstName : document.getElementById('prenom').value,
-            lastName : document.getElementById('nom').value,
-            email : document.getElementById('email').value,
-            password : document.getElementById('password').value
-        }
+    let navigate = useNavigate();
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(account)
-        };
-        fetch('http://localhost:8080/api/auth/signup', requestOptions)
-            .then(response => {
-                // ❓ 
-                // Au 1er envoi du formulaire, ça ne fait rien,
-                // au 2eme envoi, ça enregistre le compte dans la DB mais ne fait pas de redirection
-                // au 3eme envoi, ça enregistre dans la DB et fait la redirection 
-                window.location.assign('/login')
-            })
+    let info = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+    };
+
+    let createAccount = () => {
+        console.log('1');
+                   
+        return axios.post('http://localhost:8080/api/auth/signup', info)
+            .then(() => {
+                console.log('2');
+                navigate("/login");
+            }) 
+            .catch(err => console.log(err))
     }
 
     return (
@@ -45,28 +43,28 @@ const Signup = () => {
 
             <img className ='logoIllustration' src={shape}></img>
             
-            <form className='SignupForm' onSubmit={setAccount}>
+            <form className='SignupForm' id='SignupForm'>
 
 
                 <legend className='legend'>Inscription</legend>
 
                 <p className='alreadyMember'>Déjà membre ? <a href='/login'>Connexion</a></p>
 
-                <label className='prenom' >Prénom 
-                    <input id='prenom' type='text'></input>
+                <label className='prenomLabel' >Prénom 
+                    <input id='prenom' type='text' defaultValue={info.firstName} onInput={e => info.firstName = e.target.value}></input>
                 </label>
 
-                <label className='nom' >Nom 
-                    <input id='nom' type='text'></input>
+                <label className='nomLabel' >Nom 
+                    <input id='nom' type='text' defaultValue={info.lastName} onInput={e => info.lastName = e.target.value} ></input>
                 </label>
 
-                <label className='email' >Email 
-                    <input id='email' type='email'></input>
+                <label className='emailLabel' >Email 
+                    <input id='email' type='email' defaultValue={info.email} onInput={e => info.email = e.target.value} ></input>
                 </label>
 
                 
-                <label className='password' >Mot de passe 
-                    <input id='password' type='password'></input>
+                <label className='passwordLabel' >Mot de passe 
+                    <input id='password' type='password' defaultValue={info.password} onInput={e => info.password = e.target.value} ></input>
                 </label>
 
                 <div className='agreeTerms'>      
@@ -76,11 +74,11 @@ const Signup = () => {
                         </label>
                 </div>
 
-                <input className='submit' type='submit' value="Créer mon compte"></input>
+                <input type='button' onClick={createAccount} className='submit' value="Créer mon compte"></input>
 
             </form>
         </div>
     );
 }
 
-export default Signup;
+export default SignupForm;

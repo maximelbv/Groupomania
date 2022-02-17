@@ -69,10 +69,10 @@
         }
     }
 
-    .prenom {grid-area: prenom;}
-    .nom {grid-area: nom;}
-    .email {grid-area: email;}
-    .password {grid-area: password;}
+    .prenomLabel {grid-area: prenom;}
+    .nomLabel {grid-area: nom;}
+    .emailLabel {grid-area: email;}
+    .passwordLabel {grid-area: password;}
     .agreeTerms {
         grid-area: agreeTerms;
         position: relative;
