@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
 import { NavLink } from 'react-router-dom';
+import user from '../../utils/currentUser';
 import './User.scss'
 
 const User = () => {
@@ -11,14 +12,9 @@ const User = () => {
             <div className='content'>
                 <div className='userHeader'>
                     <div className='profilePic'></div>
-                    <h2 className='name'>John Doe</h2>
-                    <p className='nickname'>@JohnDoe</p>
-                    <a href='mailto:johnDoe@mail.com' className='email'>johnDoe@mail.com</a>
-                    <div className='position'>
-                        <p className='work'>Poste</p>
-                        <p className='workDesc'>Consultant</p>
-                    </div>
-                    <NavLink to='/edit' className='editProfile'>Editer</NavLink>
+                    <h2 className='name'>{user.firstName} {user.lastName}</h2>
+                    <a href='#' className='email'>{user.email}</a>
+                    <NavLink to='/edit' className='editProfile'>Editer le profil</NavLink>
                 </div>
             </div>
 

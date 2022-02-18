@@ -54,6 +54,7 @@ export async function loginPost(req, res) {
                 if (data) {
                     return res.status(200).json({ 
                         msg: "Login success", 
+                        user: user[0],
                         token: jwt.sign(
                             {userId: req.body.userId},
                             process.env.JWT_SECRET,
@@ -74,3 +75,19 @@ export async function loginPost(req, res) {
 
 }
 
+export async function requireAuth(req, res) {
+
+// const token = req.cookies.jwt;
+//     if (token) {
+//         jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
+//             if (err) {
+//                 console.log(err);
+//                 res.send(200).json('no token')
+//             } else {
+//                 res.send(200).json(decodedToken)
+//             }
+//         })
+//     } else {
+//         console.log('no token')
+//     }
+}

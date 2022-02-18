@@ -6,29 +6,32 @@ import '../../styles/forms.scss'
 import shape from '../../assets/img/Shape.svg';
 import axios from 'axios';
 import validationGif from '../../assets/img/validation_anim.gif';
+import { setCookie } from '../../utils/cookies';
 
 const Loginform = () => {
 
-        let navigate = useNavigate();
-        
-        let login = {
-            email: '',
-            password: ''
-        }
+    let navigate = useNavigate();
+    
+    let login = {
+        email: '',
+        password: ''
+    }
 
-        let connection = () => {
-            return axios.post('http://localhost:8080/api/auth/login', login)
-                .then((res) => {
-                    if (res.data.msg === 'Login success') {
-                        localStorage.setItem('userToken', res.data.token);
-                        const element = <div id='validationGif'><img src={validationGif} width="250px"/><p><span className='bonjour'>Bonjour</span><br/><span className='user'>User</span></p></div>
-                        
-                        ReactDOM.render(element, document.getElementById('loginCtn'));
-                        setTimeout(() => {navigate("/");}, 2000)
-                    }
-                })
-                .catch(err => console.log(err))
-        }
+    let connection = () => {
+        return axios.post('http://localhost:8080/api/auth/login', login)
+            .then((res) => {
+                if (res.data.msg === 'Login success') {
+                    localStorage.setItem('userToken', res.data.token);
+                    localStorage.setItem('user', JSON.stringify(res.data.user));
+                    // setCookie('token', `${res.data.token}`, 3);
+                    const element = <div id='validationGif'><img src={validationGif} width="250px"/><p><span className='bonjour'>Bonjour</span><br/><span className='user'>{res.data.user.firstName}</span></p></div>
+                    
+                    ReactDOM.render(element, document.getElementById('loginCtn'));
+                    setTimeout(() => {navigate("/");}, 2000)
+                }
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <div className='loginCtn' id='loginCtn'>

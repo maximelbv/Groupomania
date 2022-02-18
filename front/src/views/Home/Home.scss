@@ -1,0 +1,42 @@
+@import '../../styles/mixins';
+@import '../../styles/colors.scss';
+@import '../../styles/fonts.scss';
+
+.Home {
+    @include flexCenter;
+
+    .postsContainer {
+        display: flex;
+        flex-direction: column;
+        margin-top: 50px;
+        width: 60%;
+
+        .post {
+            background: white;
+            border-radius: 5px;
+            margin: 20px 0;
+            padding: 20px;
+            .userInfos {
+                @include flexCenter;
+                justify-content: flex-start;
+                margin-bottom: 20px;
+
+                .profilePic {
+                    margin-right: 10px;
+                    color: white;
+                    @include flexCenter;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50px;
+                    background: gray;
+                }
+                .name {font-size: $fontSizeXS;}
+                .date {
+                    font-size: $fontSizeXXS;
+                    color: grey;
+                }
+            }
+        }
+
+    }
+}

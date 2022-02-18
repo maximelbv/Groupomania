@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import user from '../../utils/currentUser';
 import './Header.scss';
-import logo from '../../assets/img/icon.svg'
+import logo from '../../assets/img/icon.svg';
+
 
 const Header = () => {
+
+    console.log(user.userId);
 
     // Close the dropdown menu if the user clicks outside of it
     window.onclick = function(event) {
@@ -35,8 +38,7 @@ const Header = () => {
                     
                     <div className='userSettings' id='userSettings'>
                         <a className="user" href="/user">
-                            <p className='name'>John Doe</p>
-                            <p className='nickname'>@JohnDoe</p>
+                            <p className='name'>{user.firstName} {user.lastName}</p>
                         </a>
                         <a className='settings' href="#">Paramètres</a>
                         <a className='logout' href="#">Déconnexion</a>

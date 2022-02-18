@@ -1,5 +1,6 @@
 import express from 'express';
 import authRoutes from './routes/auth.routes.js';
+import postRoutes from './routes/post.routes.js';
 
 const app = express();
 // expressApp.use(helmet());
@@ -20,7 +21,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 
-
+app.use('/api/post', postRoutes);
 
 
 export default app;

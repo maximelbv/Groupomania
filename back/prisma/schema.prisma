@@ -14,3 +14,14 @@ model employee {
   email     String @db.VarChar(255)
   password  String @db.VarChar(255)
 }
+
+model user_post {
+  postId     String   @id @db.VarChar(255)
+  userId     String   @db.VarChar(255)
+  commentsId String   @db.VarChar(255)
+  message    String   @db.LongText
+  picture    String   @db.VarChar(255)
+  video      String   @db.VarChar(255)
+  usersLiked Int      @default(0)
+  date       DateTime @default(now()) @db.DateTime(0)
+}
