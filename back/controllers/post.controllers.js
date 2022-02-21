@@ -39,3 +39,13 @@ export async function getAll (req, res) {
         })
         .catch(e => res.send(e))
 } 
+
+export async function deletePost (req, res) {
+    await prisma.user_post.delete({
+        where: {
+            postId: req.params.postId,
+        },
+    })
+        .then(res => res.send('Post supprimé'))
+        .catch(e => res.send(e))
+}

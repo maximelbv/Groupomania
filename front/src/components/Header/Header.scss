@@ -42,6 +42,7 @@
                 border-radius: 50px;
                 border: none;
                 background: grey;
+                color: white;
             }
 
             .userSettings {
@@ -92,6 +93,9 @@
 
     }
 
-    .show {display: flex !important;}
+    .show {
+        display: flex !important;
+        position: absolute;
+    }
 
 }

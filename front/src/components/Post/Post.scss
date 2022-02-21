@@ -7,6 +7,7 @@
     border-radius: 5px;
     margin: 20px 0;
     padding: 20px;
+    // position: relative;
     .userInfos {
         @include flexCenter;
         justify-content: flex-start;
@@ -26,6 +27,19 @@
             font-size: $fontSizeXXS;
             color: grey;
         }
+    }
+    .deleteBtn {
+        // position: absolute;
+        // top: 5px;
+        // right: 5px;
+        width: 20px;
+        height: 20px;
+        background: red;
+        color: white;
+        border: none;
+        @include flexCenter;
+        border-radius: 5px;
+        cursor: pointer;
     }
 }
 

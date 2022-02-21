@@ -45,8 +45,8 @@ const Home = () => {
 
             <div className='postsContainer'>
                 
-                {posts !== undefined ? posts.map((p, key) => {
-                    return <Post p={p} />
+                {posts !== undefined ? posts.map((p, i) => {
+                    return <Post p={p} key={i} />
                 }) : null}
 
             </div>

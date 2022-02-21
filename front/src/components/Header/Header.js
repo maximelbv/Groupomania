@@ -32,7 +32,9 @@ const Header = () => {
 
                 <div className='dropDown'>
 
-                    <button onClick={() => {document.getElementById('userSettings').classList.toggle('show')}} className='dropDownTrigger'></button>
+                    <button onClick={() => {document.getElementById('userSettings').classList.toggle('show')}} className='dropDownTrigger'>
+                        {user.firstName.substring(0, 1)}
+                    </button>
                     
                     <div className='userSettings' id='userSettings'>
                         <a className="user" href="/user">
