@@ -3,40 +3,27 @@
 @import '../../styles/fonts.scss';
 
 .Home {
-    @include flexCenter;
 
+    .setPostContainer {
+        width: 95%;
+        max-width: 700px;
+        .message {
+            display: block;
+            background: white;
+        }
+        .submit {
+            @include btn;
+            width: 100px;
+        }
+    }
+
+    @include flexCenter;
+    flex-direction: column;
+    margin-top: 50px;
     .postsContainer {
+        width: 95%;
+        max-width: 700px;
         display: flex;
         flex-direction: column;
-        margin-top: 50px;
-        width: 60%;
-
-        .post {
-            background: white;
-            border-radius: 5px;
-            margin: 20px 0;
-            padding: 20px;
-            .userInfos {
-                @include flexCenter;
-                justify-content: flex-start;
-                margin-bottom: 20px;
-
-                .profilePic {
-                    margin-right: 10px;
-                    color: white;
-                    @include flexCenter;
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50px;
-                    background: gray;
-                }
-                .name {font-size: $fontSizeXS;}
-                .date {
-                    font-size: $fontSizeXXS;
-                    color: grey;
-                }
-            }
-        }
-
     }
 }

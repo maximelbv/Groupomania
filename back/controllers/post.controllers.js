@@ -1,24 +1,28 @@
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
+import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
 
 export async function post (req, res) {
 
-    const { userId, message, picture, video, date } = req.body;
+    const postId = uuidv4();
+    const { userId, commentsId, author, message, picture, video } = req.body;
 
     await prisma.user_post.create({
         data: {
+            postId,
             userId,
+            commentsId,
+            author,
             message,
             picture,
             video,
-            date
         }
     })
     return res.status(200).json({
         status: 'succès',
-        msg: 'Votre compte a bien été créé'
+        msg: 'Post créé avec succès'
     })
     // .catch((e) => {throw e})
 
@@ -34,4 +38,4 @@ export async function getAll (req, res) {
             return res.send(users);
         })
         .catch(e => res.send(e))
-}
+} 

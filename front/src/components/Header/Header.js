@@ -6,8 +6,6 @@ import logo from '../../assets/img/icon.svg';
 
 const Header = () => {
 
-    console.log(user.userId);
-
     // Close the dropdown menu if the user clicks outside of it
     window.onclick = function(event) {
         if (!event.target.matches('.dropDownTrigger')) {
