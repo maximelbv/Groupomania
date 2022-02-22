@@ -19,6 +19,9 @@
                 border-radius: 500px;
                 background: grey;
                 margin: 15px 0;
+                @include flexCenter;
+                color: white;
+                font-size: 50px;
             }
             .name {font-size: $fontSizeL;}
             .nickname {color: $secondaryTxtColor;}

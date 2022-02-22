@@ -8,6 +8,4 @@ router.post('/signup', authControllers.signupPost);
 
 router.post('/login', authControllers.loginPost);
 
-router.get('/jwt', authControllers.requireAuth);
-
 export default router; 

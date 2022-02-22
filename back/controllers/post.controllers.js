@@ -49,3 +49,33 @@ export async function deletePost (req, res) {
         .then(res => res.send('Post supprimé'))
         .catch(e => res.send(e))
 }
+
+export async function getAllFromUser (req, res) {
+    await prisma.user_post.findMany({
+        where : {
+            userId : req.params.userId
+        }
+    })
+        .then((post) => {
+            if (!post) return res.send('no posts')
+            return res.send(post);
+        })
+        .catch(e => res.send(e))
+}
+
+export async function modifyPost(req, res) {
+    const { message, picture, video } = req.body;
+    await prisma.user_post.update({
+        where: {
+            postId : req.params.postId
+        },
+        data : {
+            message: message,
+            picture: picture,
+            video: video,
+        }
+    })
+    .then(() => {
+        res.send('post modifié')
+    })
+}

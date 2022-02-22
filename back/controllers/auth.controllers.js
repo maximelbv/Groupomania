@@ -75,19 +75,24 @@ export async function loginPost(req, res) {
 
 }
 
-export async function requireAuth(req, res) {
+export async function requireAuth(req, res, next) {
 
-// const token = req.cookies.jwt;
-//     if (token) {
-//         jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
-//             if (err) {
-//                 console.log(err);
-//                 res.send(200).json('no token')
-//             } else {
-//                 res.send(200).json(decodedToken)
-//             }
-//         })
-//     } else {
-//         console.log('no token')
-//     }
+    try {
+        // take the authorization token (and remove the 'Bearer ')
+        const token = req.headers.authorization.split(' ')[1];
+        // verify if the token matches the env token
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decodedToken.userId;
+        req.auth = { userId };
+        console.log(userId);
+        // if not: throw an error message
+        if (req.body.userId && req.body.userId !== userId) {
+            throw 'user id non valable';
+        // else: continue the execution
+        } else {
+            next();
+        }
+    } catch(error) {
+        res.status(401).json({ error: 'Requête non authentifiée' });
+    }
 }

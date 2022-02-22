@@ -7,9 +7,9 @@ import './Home.scss';
 
 const Home = () => {
 
+    const token = localStorage.getItem('userToken');
     const [posts, setPosts] = useState();
 
-    
     let info = {
         userId : user.userId,
         commentsId : '',
@@ -20,15 +20,19 @@ const Home = () => {
     }
 
     let sendPost = () => {
-        return axios.post('http://localhost:8080/api/post/post', info)
-            .then (() => {
-                console.log('ok')
+        return axios.post('http://localhost:8080/api/post/post', info, {
+            headers: {'Authorization' : `Bearer ${token}`}
+        })
+        .then (() => {
+            console.log('ok')
             })
             .catch(err => console.log(err))
         }
         
     useEffect(() => {
-        axios.get('http://localhost:8080/api/post/getAll')
+        axios.get('http://localhost:8080/api/post/getAll', {
+            headers: {'Authorization' : `Bearer ${token}`}
+        })
             .then((res) => {
                 setPosts(res.data); 
             })
