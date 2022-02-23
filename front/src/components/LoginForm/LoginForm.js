@@ -17,7 +17,25 @@ const Loginform = () => {
     let connection = () => {
         return axios.post('http://localhost:8080/api/auth/login', login)
             .then(async (res) => {
-                if (res.data.msg === 'Login success') {
+
+                if (res.status === 210) {
+                    let errors = []
+                    for (let i=0;i<res.data.errors.length;i++) {
+                        errors.push(React.createElement('p', {}, res.data.errors[i].msg))
+                    }
+                    ReactDOM.render(
+                        errors,
+                        document.querySelector('.errors')
+                    )
+                    
+                } else if (res.status === 211) {
+                    let emailAlreadyUsed = React.createElement('p', {}, res.data.error)
+                    ReactDOM.render(
+                        emailAlreadyUsed,
+                        document.querySelector('.errors')
+                    )
+                    
+                } else if (res.data.msg === 'Login success') {
                     await localStorage.setItem('userToken', res.data.token);
                     await localStorage.setItem('user', JSON.stringify(res.data.user));
                     // setCookie('token', `${res.data.token}`, 3);
@@ -55,6 +73,8 @@ const Loginform = () => {
             <label className='password'>Mot de passe 
                 <input id='password' type='password' defaultValue={login.password} onChange={e => login.password = e.target.value}></input>
             </label>
+
+            <div className='errors'></div>
 
             <input className='submit' onClick={connection} type='button' value="Connexion"></input>
 

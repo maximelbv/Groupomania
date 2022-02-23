@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import ReactDOM from 'react-dom';
 import './SignupForm.scss'
 import '../../styles/forms.scss'
 import shape from '../../assets/img/Shape.svg';
@@ -23,12 +24,29 @@ const SignupForm = () => {
     };
 
     let createAccount = () => {
-        console.log('1');
                    
         return axios.post('http://localhost:8080/api/auth/signup', info)
-            .then(() => {
-                console.log('2');
-                navigate("/login");
+            .then((res) => {
+                if (res.status === 210) {
+                    let errors = []
+                    for (let i=0;i<res.data.errors.length;i++) {
+                        errors.push(React.createElement('p', {}, res.data.errors[i].msg))
+                    }
+                    ReactDOM.render(
+                        errors,
+                        document.querySelector('.errors')
+                    )
+                    
+                } else if (res.status === 211) {
+                    let emailAlreadyUsed = React.createElement('p', {}, res.data.error)
+                    ReactDOM.render(
+                        emailAlreadyUsed,
+                        document.querySelector('.errors')
+                    )
+                    
+                } else {
+                    navigate("/login");
+                }
             }) 
             .catch(err => console.log(err))
     }
@@ -73,6 +91,8 @@ const SignupForm = () => {
                         J'accepte les <a target='_blank' href='/terms'>Termes de services</a> et la <a target='_blank' href='/privacy'>Politique de confidentialité</a>
                         </label>
                 </div>
+
+                <div className='errors'></div>
 
                 <input type='button' onClick={createAccount} className='submit' value="Créer mon compte"></input>
 

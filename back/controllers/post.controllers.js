@@ -7,13 +7,12 @@ const prisma = new PrismaClient();
 export async function post (req, res) {
 
     const postId = uuidv4();
-    const { userId, commentsId, author, message, picture, video } = req.body;
+    const { userId, author, message, picture, video } = req.body;
 
     await prisma.user_post.create({
         data: {
             postId,
             userId,
-            commentsId,
             author,
             message,
             picture,

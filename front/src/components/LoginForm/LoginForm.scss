@@ -44,6 +44,7 @@
         "notAMember notAMember"
         "email email"
         "password password"
+        "errors errors"
         "submit ."
     ;
 
@@ -66,6 +67,18 @@
     }
     .email {grid-area: email;}
     .password {grid-area: password;}
+    .errors {
+        grid-area: errors;
+        & * {
+            font-size: $fontSizeXS;
+            color: rgb(199, 94, 89);
+            background: rgb(255, 227, 227);
+            margin: 10px 0;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid rgb(199, 94, 89);
+        }
+    }
     .submit {
         cursor: pointer;
         @include btn;

@@ -12,7 +12,7 @@ export function signupPost(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
+        return res.status(210).json({errors: errors.array()})
     } else {
         
         const userId = uuidv4();
@@ -24,7 +24,7 @@ export function signupPost(req, res) {
             for (let i=0; i < user.length; i++) {
                 
                 if (user[i].email === email) {
-                    return res.status(400).json({error : 'Adresse mail déjà utilisée'})
+                    return res.status(211).json({error : 'Adresse mail déjà utilisée'})
                 } else {
     
                     return bcrypt.hash(password, 10)
@@ -66,38 +66,51 @@ export function signupPost(req, res) {
 
 export async function loginPost(req, res) {
 
-    await prisma.employee.findMany({
-        where: { email: req.body.email }
-    })
-        .then(user => {
-            if (!user) return res.status(400).json({ msg: "User dont exist" })
+    const errors = validationResult(req);
 
-            console.log(user) 
-            bcrypt.compare(req.body.password, user[0].password, (err, data) => {
+    if (!errors.isEmpty()) {
+        return res.status(210).json({errors: errors.array()})
+    } else {
 
-                if (err) return res.status(404).json({ msg: "error" })
-            
-                if (data) {
-                    return res.status(200).json({ 
-                        msg: "Login success", 
-                        user: user[0],
-                        token: jwt.sign(
-                            {userId: req.body.userId},
-                            process.env.JWT_SECRET,
-                            {expiresIn: '24h'}
-                        )
-                    })
-                } else {
-                    return res.status(401).json({ msg: "Invalid credencial" }) 
-                }
-
-            })
+        await prisma.employee.findMany({
+            where: { email: req.body.email }
         })
-    .catch((e) => {throw e})
+            .then(user => {
+                if (!user) {
+                    return res.status(211).json({ error: "Mauvais identifiant ou mot de passe" })
+                } else {
+                    
+                    console.log(user) 
+                    bcrypt.compare(req.body.password, user[0].password, (err, data) => {
         
-    .finally(async () => {
-        await prisma.$disconnect()
-    }) 
+                        if (err) return res.status(404).json({ msg: "error" })
+                    
+                        if (data) {
+                            return res.status(200).json({ 
+                                msg: "Login success", 
+                                user: user[0],
+                                token: jwt.sign(
+                                    {userId: req.body.userId},
+                                    process.env.JWT_SECRET,
+                                    {expiresIn: '24h'}
+                                )
+                            })
+                        } else {
+                            return res.status(211).json({ error: "Mauvais identifiant ou mot de passe" }) 
+                        }
+        
+                    })
+                }
+    
+            })
+        .catch((e) => {throw e})
+            
+        .finally(async () => {
+            await prisma.$disconnect()
+        }) 
+
+    }
+
 
 }
 

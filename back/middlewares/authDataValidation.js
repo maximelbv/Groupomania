@@ -2,6 +2,12 @@ import { check } from 'express-validator';
 
 export let signupCheck = [
 
+    check('firstName')
+        .notEmpty().withMessage('Le prénom ne peut pas être vide'),
+
+    check('lastName')
+        .notEmpty().withMessage('Le nom ne peut pas être vide'),
+
     check('email')
         .notEmpty().withMessage('Le champ d\'email ne peut pas être vide')
         .isEmail().withMessage('Format incorrect, veuillez entrer une adresse email valide'),
