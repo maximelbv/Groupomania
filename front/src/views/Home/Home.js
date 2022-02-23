@@ -3,6 +3,7 @@ import Header from '../../components/Header/Header';
 import Post from '../../components/Post/Post.js';
 import axios from 'axios';
 import user from '../../utils/currentUser';
+import { Form } from 'react-bootstrap';
 import './Home.scss';
 
 const Home = () => {
@@ -44,6 +45,10 @@ const Home = () => {
 
             <form className='setPostContainer' onSubmit={sendPost}>
                 <input className='message' type='longtext' rows='250' cols='50' defaultValue={info.message} onChange={e => info.message = e.target.value}></input>
+                <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Label></Form.Label>
+                    <Form.Control type="file" accept='.jpg, .jpeg, .png' defaultValue={info.picture} onChange={e => info.picture = e.target.files[0].name} />
+                </Form.Group>
                 <input className='submit' type='submit' value='Poster'></input>
             </form>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import user from '../../utils/currentUser';
 import './Header.scss';
 import logo from '../../assets/img/icon.svg';
+import axios from 'axios';
 
 
 const Header = () => {
@@ -20,6 +21,14 @@ const Header = () => {
         }
     }
 
+    const deleteAccount = () => {
+        axios.delete(`http://localhost:8080/api/auth/delete/${user.userId}`)
+            .then(() => {
+                console.log('ok');
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className='Header'>
             <div className='headerContainer'>
@@ -33,15 +42,16 @@ const Header = () => {
                 <div className='dropDown'>
 
                     <button onClick={() => {document.getElementById('userSettings').classList.toggle('show')}} className='dropDownTrigger'>
-                        {user.firstName.substring(0, 1)}
+                        
+                        {user.firstName && user.firstName.substring(0, 1)}
                     </button>
                     
                     <div className='userSettings' id='userSettings'>
                         <a className="user" href="/user">
                             <p className='name'>{user.firstName} {user.lastName}</p>
                         </a>
-                        <a className='settings' href="#">Paramètres</a>
-                        <a className='logout' href="#">Déconnexion</a>
+                        <a className='logout' onClick={() => {localStorage.removeItem('userToken'); localStorage.removeItem('user')} } href="/login">Déconnexion</a>
+                        <a className='deleteAccount' onClick={deleteAccount} href="/login">Supprimer le Compte</a>
                     </div>
 
                 </div>

@@ -1,6 +1,7 @@
 import express from 'express';
 import authRoutes from './routes/auth.routes.js';
 import postRoutes from './routes/post.routes.js';
+import path from 'path';
 
 const app = express();
 // expressApp.use(helmet());
@@ -18,6 +19,8 @@ app.use((req, res, next) => {
 
 // body parser
 app.use(express.json());
+
+app.use('/images', express.static(path.join('images')));
 
 app.use('/api/auth', authRoutes);
 

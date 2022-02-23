@@ -3,9 +3,12 @@ import express from "express";
 const router = express.Router();
 
 import * as authControllers from '../controllers/auth.controllers.js';
+import * as authDataValidation from '../middlewares/authDataValidation.js';
 
-router.post('/signup', authControllers.signupPost);
+router.post('/signup', authDataValidation.signupCheck, authControllers.signupPost);
 
-router.post('/login', authControllers.loginPost);
+router.post('/login', authDataValidation.loginCheck, authControllers.loginPost);
 
-export default router; 
+router.delete('/delete/:userId', authControllers.deleteUser);
+
+export default router;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
 import ReactDOM from 'react-dom'
 import './LoginForm.scss';
 import '../../styles/forms.scss'
@@ -9,8 +8,6 @@ import validationGif from '../../assets/img/validation_anim.gif';
 import { setCookie } from '../../utils/cookies';
 
 const Loginform = () => {
-
-    let navigate = useNavigate();
     
     let login = {
         email: '',
@@ -19,15 +16,15 @@ const Loginform = () => {
 
     let connection = () => {
         return axios.post('http://localhost:8080/api/auth/login', login)
-            .then((res) => {
+            .then(async (res) => {
                 if (res.data.msg === 'Login success') {
-                    localStorage.setItem('userToken', res.data.token);
-                    localStorage.setItem('user', JSON.stringify(res.data.user));
+                    await localStorage.setItem('userToken', res.data.token);
+                    await localStorage.setItem('user', JSON.stringify(res.data.user));
                     // setCookie('token', `${res.data.token}`, 3);
                     const element = <div id='validationGif'><img src={validationGif} width="250px"/><p><span className='bonjour'>Bonjour</span><br/><span className='user'>{res.data.user.firstName}</span></p></div>
                     
                     ReactDOM.render(element, document.getElementById('loginCtn'));
-                    setTimeout(() => {navigate("/");}, 2000)
+                    setTimeout(() => {window.location.assign('/');}, 2000)
                 }
             })
             .catch(err => console.log(err))

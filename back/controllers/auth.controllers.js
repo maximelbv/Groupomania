@@ -3,37 +3,63 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
+import { validationResult } from 'express-validator';
 
 const prisma = new PrismaClient();
 
 export function signupPost(req, res) {
 
-    console.log('ok')
-    const userId = uuidv4();
-    const { firstName, lastName, email, password } = req.body;
+    const errors = validationResult(req);
 
-    return bcrypt.hash(password, 10)
-        .then(async (hash) => {
-            const result = await prisma.employee.create({
-                data: {
-                    userId,
-                    firstName,
-                    lastName,
-                    email,
-                    password: hash,
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() })
+    } else {
+        
+        const userId = uuidv4();
+        const { firstName, lastName, email, password } = req.body;
+
+        prisma.employee.findMany()
+        .then((user) => {
+
+            for (let i=0; i < user.length; i++) {
+                
+                if (user[i].email === email) {
+                    return res.status(400).json({error : 'Adresse mail déjà utilisée'})
+                } else {
+    
+                    return bcrypt.hash(password, 10)
+                        .then(async (hash) => {
+                            const result = await prisma.employee.create({
+                                data: {
+                                    userId,
+                                    firstName,
+                                    lastName,
+                                    email,
+                                    password: hash,
+                                }
+                            })
+                            return res.status(200).json({
+                                status: 'succès',
+                                msg: 'Votre compte a bien été créé'
+                            })
+                
+                        })
+                        .catch((e) => {throw e})
+                
+                        .finally(async () => {
+                            await prisma.$disconnect()
+                        });
                 }
-            })
-            return res.status(200).json({
-                status: 'succès',
-                msg: 'Votre compte a bien été créé'
-            })
+            }
 
         })
-        .catch((e) => {throw e})
+        .catch(err => res.status(400).json(err))
+    
 
-        .finally(async () => {
-            await prisma.$disconnect()
-        });
+
+
+
+    }
 
 }
 
@@ -73,6 +99,14 @@ export async function loginPost(req, res) {
         await prisma.$disconnect()
     }) 
 
+}
+
+export async function deleteUser(req, res) {
+    await prisma.employee.delete({
+        where: {userId: req.params.userId}
+    })
+    .then(res => res.status(200).json(res))
+    .catch(err => res.status(400).json(err))
 }
 
 export async function requireAuth(req, res, next) {

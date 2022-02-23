@@ -5,7 +5,7 @@ import './Post.scss';
 
 const Post = ({p, i}) => {
 
-  let message = 'test';
+  let message = '';
 
   const token = localStorage.getItem('userToken');
 
@@ -34,13 +34,13 @@ const Post = ({p, i}) => {
         .catch(e => console.log(e))
   
     }
+
     let message = React.createElement('input', { type: 'textarea', className: 'inputMessage', onChange: e => message = e.target.value })
     let sendMessage = React.createElement('input', { onClick: sendPost, type: 'button', className: 'inputMessage', value: 'Modifier' })
     ReactDOM.render(
       [message, sendMessage],
       document.getElementById(`message${p.postId}`)
     )
-      
     
   }
   
