@@ -1,6 +1,7 @@
 import express from 'express';
 import authRoutes from './routes/auth.routes.js';
 import postRoutes from './routes/post.routes.js';
+import commentRoutes from './routes/comment.routes.js';
 import path from 'path';
 
 const app = express();
@@ -25,6 +26,8 @@ app.use('/images', express.static(path.join('images')));
 app.use('/api/auth', authRoutes);
 
 app.use('/api/post', postRoutes);
+
+app.use('/api/comment', commentRoutes);
 
 
 export default app;
