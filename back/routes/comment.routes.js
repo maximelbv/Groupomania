@@ -7,7 +7,7 @@ import { requireAuth } from "../controllers/auth.controllers.js";
 
 router.post('/post', commentControllers.post);
 
-router.get('/getAll', commentControllers.getAll);
+router.get('/getAll/:postId', commentControllers.getAll);
 
 router.put('/:commentId', commentControllers.modifyComment);
 

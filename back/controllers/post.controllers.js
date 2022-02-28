@@ -27,11 +27,6 @@ export async function post (req, res) {
             })
         })
         .catch(e => res.send(e))
-    // .catch((e) => {throw e})
-
-    // .finally(async () => {
-    //     await prisma.$disconnect()
-    // });
 } 
 
 export async function getAll (req, res) {
@@ -47,6 +42,23 @@ export async function getAll (req, res) {
         })
         .catch(e => res.send(e))
 } 
+
+export async function modifyPost(req, res) {
+    const { message, picture, video } = req.body;
+    await prisma.user_post.update({
+        where: {
+            postId : req.params.postId
+        },
+        data : {
+            message: message,
+            picture: picture,
+            video: video,
+        }
+    })
+    .then(() => {
+        res.send('post modifié')
+    })
+}
 
 export async function deletePost (req, res) {
     await prisma.user_post.delete({
@@ -69,21 +81,4 @@ export async function getAllFromUser (req, res) {
             return res.send(post);
         })
         .catch(e => res.send(e))
-}
-
-export async function modifyPost(req, res) {
-    const { message, picture, video } = req.body;
-    await prisma.user_post.update({
-        where: {
-            postId : req.params.postId
-        },
-        data : {
-            message: message,
-            picture: picture,
-            video: video,
-        }
-    })
-    .then(() => {
-        res.send('post modifié')
-    })
 }
