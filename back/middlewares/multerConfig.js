@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     // null means that there is no errors
     // 'images' is the name of the destination directory
-    callback(null, 'images');
+    callback(null, './images');
   },
   filename: (req, file, callback) => {
     // assign the file name to a const, avoid whitespaces with split() and join()
@@ -25,4 +25,4 @@ const storage = multer.diskStorage({
   }
 });
 
-export default multer({storage: storage}).single('images');
+export default multer({storage: storage}).single('image');

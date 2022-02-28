@@ -19,10 +19,14 @@ export async function post (req, res) {
             video,
         }
     })
-    return res.status(200).json({
-        status: 'succès',
-        msg: 'Post créé avec succès'
-    })
+    // `${req.protocol}://${req.get('host')}/images/${req.body.picture.filename}`
+        .then(() => {
+            return res.status(200).json({
+                status: 'succès',
+                msg: 'Post créé avec succès'
+            })
+        })
+        .catch(e => res.send(e))
     // .catch((e) => {throw e})
 
     // .finally(async () => {
@@ -31,7 +35,12 @@ export async function post (req, res) {
 } 
 
 export async function getAll (req, res) {
-    await prisma.user_post.findMany()
+    await prisma.user_post.findMany({
+        orderBy: [
+            {
+            date: 'desc',
+            }]
+    })
         .then((users) => {
             if (!users) return res.send('no posts')
             return res.send(users);

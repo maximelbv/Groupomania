@@ -32,10 +32,13 @@ const Post = ({p, i}) => {
       axios.put(`http://localhost:8080/api/post/${id}`, data)
         .then(() => console.log('modifié'))
         .catch(e => console.log(e))
+        .then(() => {
+          window.location.reload(false)
+        })
   
     }
 
-    let message = React.createElement('input', { type: 'textarea', className: 'inputMessage', onChange: e => message = e.target.value })
+    let message = React.createElement('input', { defaultValue: p.message,type: 'textarea', className: 'inputMessage', onChange: e => message = e.target.value })
     let sendMessage = React.createElement('input', { onClick: sendPost, type: 'button', className: 'inputMessage', value: 'Modifier' })
     ReactDOM.render(
       [message, sendMessage],
@@ -50,7 +53,7 @@ const Post = ({p, i}) => {
     axios.delete(`http://localhost:8080/api/post/${id}`, {
       headers: {'Authorization' : `Bearer ${token}`}
     })
-      .then(() => console.log('supprimé'))
+      .then(() => window.location.reload(false))
       .catch(e => console.log(e))
 
   }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import Header from '../../components/Header/Header';
 import Post from '../../components/Post/Post.js';
 import axios from 'axios';
@@ -9,11 +10,15 @@ import './Home.scss';
 const Home = () => {
 
     const token = localStorage.getItem('userToken');
+    const navigate = useNavigate();
     const [posts, setPosts] = useState();
+
+    useEffect(() => {
+        if (!token) {navigate('./login')}
+    }, []);
 
     let info = {
         userId : user.userId,
-        commentsId : '',
         author : `${user.firstName} ${user.lastName}`,
         message : '',
         picture : '',
@@ -39,11 +44,11 @@ const Home = () => {
             })
     }, [])
 
-    return (
+    return ( 
         <div className='Home'>
             <Header />
 
-            <form className='setPostContainer' onSubmit={sendPost}>
+            <form className='setPostContainer'   onSubmit={sendPost}>
                 <input className='message' type='longtext' rows='250' cols='50' defaultValue={info.message} onChange={e => info.message = e.target.value}></input>
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label></Form.Label>
@@ -51,6 +56,11 @@ const Home = () => {
                 </Form.Group>
                 <input className='submit' type='submit' value='Poster'></input>
             </form>
+
+            {/* <form action='/images' method='POST' encType='multipart/form-data'>
+                <input type='file' name='image' />
+                <button type='submit'>Submit</button>
+            </form> */}
 
             <div className='postsContainer'>
                 

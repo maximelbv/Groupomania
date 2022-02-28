@@ -18,7 +18,6 @@ model employee {
 model user_post {
   postId     String   @id @db.VarChar(255)
   userId     String   @db.VarChar(255)
-  commentsId String   @db.VarChar(255)
   author     String   @db.VarChar(255)
   message    String   @db.LongText
   picture    String   @db.VarChar(255)

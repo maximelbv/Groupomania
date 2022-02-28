@@ -112,7 +112,7 @@ export async function loginPost(req, res) {
     }
 
 
-}
+} 
 
 export async function deleteUser(req, res) {
     await prisma.employee.delete({
