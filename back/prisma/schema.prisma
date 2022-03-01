@@ -8,37 +8,40 @@ datasource db {
 }
 
 model employee {
-  userId       String        @id @db.VarChar(255)
-  firstName    String        @db.VarChar(255)
-  lastName     String        @db.VarChar(255)
-  email        String        @db.VarChar(255)
-  password     String        @db.VarChar(255)
-  user_comment user_comment?
+  userId       String         @id @db.VarChar(255)
+  firstName    String         @db.VarChar(255)
+  lastName     String         @db.VarChar(255)
+  email        String         @db.VarChar(255)
+  password     String         @db.VarChar(255)
+  user_comment user_comment[]
   user_post    user_post[]
 }
 
 model user_post {
-  postId       String        @id @db.VarChar(255)
-  userId       String        @db.VarChar(255)
-  author       String        @db.VarChar(255)
-  message      String        @db.LongText
-  picture      String        @db.VarChar(255)
-  video        String        @db.VarChar(255)
-  usersLiked   Int           @default(0)
-  date         DateTime      @default(now()) @db.DateTime(0)
-  employee     employee      @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "user_post_ibfk_1")
-  user_comment user_comment?
+  postId       String         @id @db.VarChar(255)
+  userId       String         @db.VarChar(255)
+  author       String         @db.VarChar(255)
+  message      String         @db.LongText
+  picture      String         @db.VarChar(255)
+  video        String         @db.VarChar(255)
+  usersLiked   Int            @default(0)
+  date         DateTime       @default(now()) @db.DateTime(0)
+  employee     employee       @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "user_post_ibfk_1")
+  user_comment user_comment[]
 
   @@index([userId], map: "userId")
 }
 
 model user_comment {
   commentId String    @id @db.VarChar(255)
-  postId    String    @unique(map: "postId") @db.VarChar(255)
-  userId    String    @unique(map: "userId") @db.VarChar(255)
+  postId    String    @db.VarChar(255)
+  userId    String    @db.VarChar(255)
   author    String    @db.VarChar(255)
   message   String    @db.LongText
   date      DateTime  @default(now()) @db.DateTime(0)
   user_post user_post @relation(fields: [postId], references: [postId], onDelete: Cascade, map: "user_comment_ibfk_1")
   employee  employee  @relation(fields: [userId], references: [userId], onDelete: Cascade, map: "user_comment_ibfk_2")
+
+  @@index([postId], map: "postId")
+  @@index([userId], map: "userId")
 }

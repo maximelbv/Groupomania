@@ -1,6 +1,10 @@
+@import '../../styles/fonts';
+
 .Comment {
+    border-radius: 3px;
     background: #f2f2f2;
     margin: 20px 0;
     padding: 10px;
     position: relative;
+    font-size: $fontSizeXS;
 }

@@ -9,6 +9,8 @@ router.post('/signup', authDataValidation.signupCheck, authControllers.signupPos
 
 router.post('/login', authDataValidation.loginCheck, authControllers.loginPost);
 
+router.put('/modify/:userId', authControllers.modifyAccount);
+
 router.delete('/delete/:userId', authControllers.deleteUser);
 
 export default router;

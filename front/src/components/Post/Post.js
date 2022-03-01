@@ -2,9 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Comment from '../Comment/Comment.js';
 import ReactDOM from 'react-dom';
+import user from '../../utils/currentUser';
 import './Post.scss';
 
 const Post = ({p, i}) => {
+
+  let comment = '';
 
   const [comments, setComments] = useState();
 
@@ -20,7 +23,23 @@ const Post = ({p, i}) => {
     ].join('/');
   }
 
-  const modifyPost = () => {
+  const sendComment = () => {
+
+      let data = {
+        postId: p.postId,
+        userId: user.userId,
+        author: `${user.firstName} ${user.lastName}`,
+        message: comment,
+      }
+
+      axios.post(`http://localhost:8080/api/comment/post`, data, {
+        headers: {'Authorization' : `Bearer ${token}`}
+      })
+      .then(() => window.location.reload(false))
+      .catch(e => console.log(e))
+  }
+
+  const modifyComment = () => {
     
     const sendPost = () => {
   
@@ -42,8 +61,7 @@ const Post = ({p, i}) => {
     
   }
   
-
-  const deletePost = () => {
+  const deleteComment = () => {
     let id = p.postId;
     axios.delete(`http://localhost:8080/api/post/${id}`, {
       headers: {'Authorization' : `Bearer ${token}`}
@@ -57,8 +75,8 @@ const Post = ({p, i}) => {
   useEffect(() => {
 
     if (p.userId === JSON.parse(localStorage.getItem('user')).userId) { 
-      let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn' }, '');
-      let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn' }, '');
+      let modifyBtn = React.createElement('button', { onClick: modifyComment, className: 'modifyBtn' }, '');
+      let deleteBtn = React.createElement('button', { onClick: deleteComment, className: 'deleteBtn' }, '');
       ReactDOM.render(
         [modifyBtn, deleteBtn],
         document.getElementById(p.postId)
@@ -67,6 +85,7 @@ const Post = ({p, i}) => {
 
   }, [])
 
+  // get the comments 
   useEffect(() => {
         axios.get(`http://localhost:8080/api/comment/getAll/${p.postId}`, {
             headers: {'Authorization' : `Bearer ${token}`}
@@ -101,6 +120,13 @@ const Post = ({p, i}) => {
         <div id={p.postId} className='deleteModifyCtn'></div>
 
         <div className='commentsContainer'>
+
+          <h4 className='commentsTitle'>Commentaires</h4>
+
+          <form className='postComment'>
+            <textarea onChange={e => comment = e.target.value} className='postCommentTxt' placeholder='Écrire un commentaire ...'></textarea>
+            <input   className='postCommentBtn' type='button' value='Poster' onClick={sendComment}></input>
+          </form>
                 
           {comments !== undefined ? comments.map((c, i) => {
               return <Comment c={c} key={i} />

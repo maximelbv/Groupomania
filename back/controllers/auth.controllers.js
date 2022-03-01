@@ -21,7 +21,7 @@ export function signupPost(req, res) {
         prisma.employee.findMany()
         .then((user) => {
 
-            for (let i=0; i < user.length; i++) {
+            if (user.length >= 0) for (let i=0; i < user.length; i++) {
                 
                 if (user[i].email === email) {
                     return res.status(211).json({error : 'Adresse mail déjà utilisée'})
@@ -29,7 +29,7 @@ export function signupPost(req, res) {
     
                     return bcrypt.hash(password, 10)
                         .then(async (hash) => {
-                            const result = await prisma.employee.create({
+                            await prisma.employee.create({
                                 data: {
                                     userId,
                                     firstName,
@@ -63,7 +63,6 @@ export function signupPost(req, res) {
 
 }
 
-
 export async function loginPost(req, res) {
 
     const errors = validationResult(req);
@@ -76,12 +75,12 @@ export async function loginPost(req, res) {
             where: { email: req.body.email }
         })
             .then(user => {
-                if (!user) {
+                if (!user || user === []) {
                     return res.status(211).json({ error: "Mauvais identifiant ou mot de passe" })
                 } else {
                     
-                    console.log(user) 
-                    bcrypt.compare(req.body.password, user[0].password, (err, data) => {
+                    
+                    user[0] && bcrypt.compare(req.body.password, user[0].password, (err, data) => {
         
                         if (err) return res.status(404).json({ msg: "error" })
                     
@@ -113,6 +112,25 @@ export async function loginPost(req, res) {
 
 
 } 
+
+export async function modifyAccount(req, res) {
+
+    const { firstName, lastName } = req.body;
+
+    await prisma.employee.update({
+        where: {
+            userId : req.params.userId
+        },
+        data : {
+            firstName: firstName,
+            lastName: lastName
+        }
+    })
+    .then((user) => {
+        res.send(user)
+    })
+
+}
 
 export async function deleteUser(req, res) {
     await prisma.employee.delete({

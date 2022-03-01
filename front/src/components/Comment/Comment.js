@@ -7,8 +7,12 @@ export default function Comment({c, i}) {
 
     const token = localStorage.getItem('userToken');
 
-    function padTo2Digits(num) {return num.toString().padStart(2, '0');}
+    // used of formatDate function
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
 
+    // modify the date format
     function formatDate(date) {
         return [
         padTo2Digits(date.getDate()),
@@ -39,16 +43,15 @@ export default function Comment({c, i}) {
     
     }
   
+    const deletePost = () => {
+        let id = c.commentId;
+        axios.delete(`http://localhost:8080/api/comment/${id}`, {
+        headers: {'Authorization' : `Bearer ${token}`}
+        })
+        .then(() => window.location.reload(false))
+        .catch(e => console.log(e))
 
-  const deletePost = () => {
-    let id = c.commentId;
-    axios.delete(`http://localhost:8080/api/comment/${id}`, {
-      headers: {'Authorization' : `Bearer ${token}`}
-    })
-      .then(() => window.location.reload(false))
-      .catch(e => console.log(e))
-
-  }
+    }
 
     useEffect(() => {
 
