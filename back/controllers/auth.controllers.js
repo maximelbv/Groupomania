@@ -8,7 +8,6 @@ import { validationResult } from 'express-validator';
 const prisma = new PrismaClient();
 
 export function signupPost(req, res) {
-
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -18,47 +17,34 @@ export function signupPost(req, res) {
         const userId = uuidv4();
         const { firstName, lastName, email, password } = req.body;
 
-        prisma.employee.findMany()
-        .then((user) => {
-
-            if (user.length >= 0) for (let i=0; i < user.length; i++) {
-                
-                if (user[i].email === email) {
-                    return res.status(211).json({error : 'Adresse mail déjà utilisée'})
-                } else {
+        return bcrypt.hash(password, 10)
+            .then(async (hash) => {
+                await prisma.employee.create({
+                    data: {
+                        userId,
+                        firstName,
+                        lastName,
+                        email,
+                        password: hash,
+                    }
+                })
+                return res.status(200).json({
+                    status: 'succès',
+                    msg: 'Votre compte a bien été créé'
+                })
     
-                    return bcrypt.hash(password, 10)
-                        .then(async (hash) => {
-                            await prisma.employee.create({
-                                data: {
-                                    userId,
-                                    firstName,
-                                    lastName,
-                                    email,
-                                    password: hash,
-                                }
-                            })
-                            return res.status(200).json({
-                                status: 'succès',
-                                msg: 'Votre compte a bien été créé'
-                            })
-                
-                        })
-                        .catch((e) => {throw e})
-                
-                        .finally(async () => {
-                            await prisma.$disconnect()
-                        });
+            })
+            .catch((e) => {
+                if (e.code === 'P2002' && e.meta.target === 'email') {
+                    return res.status(400).json({e: 'Adresse email déjà utilisée'})
                 }
-            }
-
-        })
-        .catch(err => res.status(400).json(err))
+                console.log(e);
+                return res.status(400).json(e);
+            })
     
-
-
-
-
+            .finally(async () => {
+                await prisma.$disconnect()
+            });
     }
 
 }
@@ -85,14 +71,15 @@ export async function loginPost(req, res) {
                         if (err) return res.status(404).json({ msg: "error" })
                     
                         if (data) {
+                            let tok = jwt.sign(
+                                    {'userId': user[0].userId},
+                                    process.env.JWT_SECRET,
+                                    {expiresIn: '24h'}
+                                );
                             return res.status(200).json({ 
                                 msg: "Login success", 
                                 user: user[0],
-                                token: jwt.sign(
-                                    {userId: req.body.userId},
-                                    process.env.JWT_SECRET,
-                                    {expiresIn: '24h'}
-                                )
+                                token: tok
                             })
                         } else {
                             return res.status(211).json({ error: "Mauvais identifiant ou mot de passe" }) 
@@ -140,22 +127,16 @@ export async function deleteUser(req, res) {
     .catch(err => res.status(400).json(err))
 }
 
+// authentification middleware: applied on post & comment routes
 export async function requireAuth(req, res, next) {
-
+    
     try {
-        // take the authorization token (and remove the 'Bearer ')
         const token = req.headers.authorization.split(' ')[1];
-        // verify if the token matches the env token
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken.userId;
-        req.auth = { userId };
-        console.log(userId);
-        // if not: throw an error message
-        if (req.body.userId && req.body.userId !== userId) {
-            throw 'user id non valable';
-        // else: continue the execution
-        } else {
+        if(decodedToken && decodedToken.userId) {
             next();
+        } else {
+            throw 'user id non valable';
         }
     } catch(error) {
         res.status(401).json({ error: 'Requête non authentifiée' });

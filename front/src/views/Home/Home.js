@@ -9,31 +9,38 @@ import './Home.scss';
 
 const Home = () => {
 
-    const token = localStorage.getItem('userToken');
-    const navigate = useNavigate();
-    const [posts, setPosts] = useState();
-
     useEffect(() => {
         if (!token) {navigate('./login')}
     }, []);
 
-    let info = {
-        userId : user.userId,
-        author : `${user.firstName} ${user.lastName}`,
-        message : '',
-        picture : '',
-        video : '',
-    }
+    let image = '';
+    let message = ''; 
 
+    const token = localStorage.getItem('userToken');
+    const navigate = useNavigate();
+    const [posts, setPosts] = useState();
+    var bodyFormData = new FormData();
+    
+    console.log(bodyFormData)
+    
+    
     let sendPost = () => {
-        return axios.post('http://localhost:8080/api/post/post', info, {
-            headers: {'Authorization' : `Bearer ${token}`}
+
+        bodyFormData.set('userId', user.userId); 
+        bodyFormData.set('author', `${user.firstName} ${user.lastName}`); 
+        bodyFormData.set('message', message); 
+        bodyFormData.set('picture', image); 
+
+        console.log('image', image)
+
+        return axios.post('http://localhost:8080/api/post/post', bodyFormData, {
+            headers: {'Authorization' : `Bearer ${token}`, 'Content-Type': 'multipart/form-data'}
         })
-        .then (() => {
-            console.log('ok')
-            })
-            .catch(err => console.log(err))
-        }
+        .then ((req) => {
+            window.location.reload()
+        })
+        .catch(err => console.log(err))
+    }
         
     useEffect(() => {
         axios.get('http://localhost:8080/api/post/getAll', {
@@ -48,19 +55,16 @@ const Home = () => {
         <div className='Home'>
             <Header />
 
-            <form className='setPostContainer'   onSubmit={sendPost}>
-                <input className='message' type='longtext' rows='250' cols='50' defaultValue={info.message} onChange={e => info.message = e.target.value}></input>
+            <form className='setPostContainer'>
+                <input className='message' type='longtext' rows='250' cols='50' defaultValue={bodyFormData.message} onChange={e =>  message = e.target.value}></input>
+
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label></Form.Label>
-                    <Form.Control type="file" accept='.jpg, .jpeg, .png' defaultValue={info.picture} onChange={e => info.picture = e.target.files[0].name} />
+                    <Form.Control type="file" accept='.jpg, .jpeg, .png, .gif' defaultValue={bodyFormData.picture} onChange={e => image = e.target.files[0]} />
                 </Form.Group>
-                <input className='submit' type='submit' value='Poster'></input>
+                
+                <input onClick={sendPost} className='submit' type='button' value='Poster'></input>
             </form>
-
-            {/* <form action='/images' method='POST' encType='multipart/form-data'>
-                <input type='file' name='image' />
-                <button type='submit'>Submit</button>
-            </form> */}
 
             <div className='postsContainer'>
                 

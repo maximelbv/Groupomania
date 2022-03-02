@@ -8,6 +8,7 @@ import './Post.scss';
 const Post = ({p, i}) => {
 
   let comment = '';
+  var bodyFormData = new FormData();
 
   const [comments, setComments] = useState();
 
@@ -39,32 +40,39 @@ const Post = ({p, i}) => {
       .catch(e => console.log(e))
   }
 
-  const modifyComment = () => {
-    
+  const modifyPost = () => {
+    let msg = p.message;
+    let img = p.picture;
     const sendPost = () => {
+
+      
+
+      bodyFormData.set('message', msg);
+      bodyFormData.set('picture', img);
   
       let id = p.postId;
-      let data = {
-        message: message,
-      }
-      axios.put(`http://localhost:8080/api/post/${id}`, data)
+
+      axios.put(`http://localhost:8080/api/post/${id}`, bodyFormData, {
+        headers: {'Authorization' : `Bearer ${token}`}
+      })
         .then(() => window.location.reload(false))
         .catch(e => console.log(e))  
     }
 
-    let message = React.createElement('input', { defaultValue: p.message,type: 'textarea', className: 'inputMessage', onChange: e => message = e.target.value })
-    let sendMessage = React.createElement('input', { onClick: sendPost, type: 'button', className: 'confirmModifBtn', value: 'Confirmer' })
+    let message = React.createElement('input', { defaultValue: p.message,type: 'textarea', className: 'inputMessage', onChange: e => msg = e.target.value })
+    let image = React.createElement('input', { type: 'file', className: 'inputFile', onChange: e => img = e.target.files[0] })
+    let send = React.createElement('input', { onClick: sendPost, type: 'button', className: 'confirmModifBtn', value: 'Confirmer' })
     ReactDOM.render(
-      [message, sendMessage],
+      [message, image, send],
       document.getElementById(`message${p.postId}`)
     )
     
   }
   
-  const deleteComment = () => {
-    let id = p.postId;
+  const deletePost = () => {
+    let id = p.postId; 
     axios.delete(`http://localhost:8080/api/post/${id}`, {
-      headers: {'Authorization' : `Bearer ${token}`}
+      headers: {'Authorization' : `Bearer ${token}`,'Content-Type': 'multipart/form-data'}
     })
       .then(() => window.location.reload(false))
       .catch(e => console.log(e))
@@ -75,8 +83,8 @@ const Post = ({p, i}) => {
   useEffect(() => {
 
     if (p.userId === JSON.parse(localStorage.getItem('user')).userId) { 
-      let modifyBtn = React.createElement('button', { onClick: modifyComment, className: 'modifyBtn' }, '');
-      let deleteBtn = React.createElement('button', { onClick: deleteComment, className: 'deleteBtn' }, '');
+      let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn' }, '');
+      let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn' }, '');
       ReactDOM.render(
         [modifyBtn, deleteBtn],
         document.getElementById(p.postId)
@@ -94,9 +102,6 @@ const Post = ({p, i}) => {
                 setComments(res.data); 
             })
     }, [])
-
-  console.log(comments)
-
 
   return (
     <div id={'postCtn' + p.postId} className='Post' key={i}>

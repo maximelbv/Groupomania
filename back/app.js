@@ -3,8 +3,10 @@ import authRoutes from './routes/auth.routes.js';
 import postRoutes from './routes/post.routes.js';
 import commentRoutes from './routes/comment.routes.js';
 import path from 'path';
+import multer from 'multer';
 
 const app = express();
+const upload = multer(); // maybe more config needed
 // expressApp.use(helmet());
 // expressApp.use(methodOverride());
 
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
 
 // body parser
 app.use(express.json());
+
 
 app.use('/images', express.static(path.join('images')));
 

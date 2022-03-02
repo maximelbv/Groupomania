@@ -4,7 +4,8 @@ import multer from 'multer';
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
-  'image/png': 'png'
+  'image/png': 'png',
+  'image/gif': 'gif',
 };
 
 // Multer configuration
@@ -25,4 +26,4 @@ const storage = multer.diskStorage({
   }
 });
 
-export default multer({storage: storage}).single('image');
+export default multer({storage: storage}).single('picture');

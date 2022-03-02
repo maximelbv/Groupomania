@@ -1,13 +1,17 @@
 import pkg from '@prisma/client';
 const { PrismaClient } = pkg;
 import { v4 as uuidv4 } from 'uuid';
+import fs from 'fs';
 
 const prisma = new PrismaClient();
 
 export async function post (req, res) {
 
     const postId = uuidv4();
-    const { userId, author, message, picture, video } = req.body;
+    const { userId, author, message } = req.body;
+    const picture = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';
+
+    console.log('req', req.file);
 
     await prisma.user_post.create({
         data: {
@@ -15,11 +19,9 @@ export async function post (req, res) {
             userId,
             author,
             message,
-            picture,
-            video,
+            picture : picture,
         }
     })
-    // `${req.protocol}://${req.get('host')}/images/${req.body.picture.filename}`
         .then(() => {
             return res.status(200).json({
                 status: 'succès',
@@ -44,7 +46,10 @@ export async function getAll (req, res) {
 } 
 
 export async function modifyPost(req, res) {
-    const { message, picture, video } = req.body;
+    console.log(req.body);
+    const message = req.body.message;
+    let picture;
+    if (req.file) picture = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
     await prisma.user_post.update({
         where: {
             postId : req.params.postId
@@ -52,7 +57,6 @@ export async function modifyPost(req, res) {
         data : {
             message: message,
             picture: picture,
-            video: video,
         }
     })
     .then(() => {
@@ -66,7 +70,15 @@ export async function deletePost (req, res) {
             postId: req.params.postId,
         },
     })
-        .then(res => res.send('Post supprimé'))
+        .then(res => {
+            if (res.picture !== '') {                
+                fs.unlink(res.picture.replace('http://localhost:8080/images/', 'images/'), err => {
+                    if (err) {console.log(err)}
+                    else {console.log('image supprimée')}
+                });
+            }
+            res.send('Post supprimé')
+        })
         .catch(e => res.send(e))
 }
 

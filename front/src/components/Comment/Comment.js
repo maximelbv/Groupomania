@@ -29,7 +29,9 @@ export default function Comment({c, i}) {
         let data = {
             message: message,
         }
-        axios.put(`http://localhost:8080/api/comment/${id}`, data)
+        axios.put(`http://localhost:8080/api/comment/${id}`, data, {
+            headers: {'Authorization' : `Bearer ${token}`}
+        })
             .then(() => window.location.reload(false))
             .catch(e => console.log(e))
         }
