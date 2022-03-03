@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Groupomania 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+7ème projet du parcours Développeur Web d'Open Classrooms
 
-## Available Scripts
+Réseau social interne pour l'entreprise Groupomania. Il permettra à sa mise en production de proposer un espace numérique pour les employés de l'entreprise pour qu'ils puissent se connaître dans un cadre plus informel.
 
-In the project directory, you can run:
+## Requirements
 
-### `npm start`
+- Node JS version 17.1.0 (version de dev)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Pour installer le projet sur votre machine, suivez les instructions: 
 
-### `npm test`
+### Installer le modèle de base de données :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Copiez l'intégralité du code contenu dans 'groupomania.sql'
+- Ouvrez votre gestionnaire de base de données (phpMyAdmin par exemple)
+- Collez le code de 'groupomania.sql' et exécutez le à la racine
 
-### `npm run build`
+En rechangeant votre gestionnaire, vous devriez voir apparaître la base 'groupomania' avec ses tables.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installer le projet
+- Clonez ce repository 
+- ouvrez un terminal à la racine du projet et entrez les commandes  à la suite
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+  cd back
+  npm install
+  npm start
+  cd ..
+  cd front
+  npm install
+  npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Le projet devrait se lancer sur le port http://127.0.0.1:3000
