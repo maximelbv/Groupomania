@@ -14,6 +14,7 @@ const User = () => {
     let firstName = user.firstName;
     let lastName = user.lastName;
 
+    // triggered on click of the 'modify account' button
     const modifyAccount = () => {
 
         const sendModification = () => {
@@ -23,6 +24,7 @@ const User = () => {
                 firstName: firstName,
                 lastName: lastName,
             }
+            //request the API to modify the account with the data
             axios.put(`http://localhost:8080/api/auth/modify/${id}`, data)
                 .then((res) => {
                     window.location.reload(false);
@@ -31,6 +33,7 @@ const User = () => {
                 .catch(e => console.log(e))  
         }
 
+        // create the inputs to modify the account, assign the 'sendModification' function to the submit button
         let firstNameInput = React.createElement('input', { type: 'textarea', defaultValue: user.firstName, className: 'inputMessage', onChange: e => firstName = e.target.value })
         let lastNameInput = React.createElement('input', { type: 'textarea', defaultValue: user.lastName, className: 'inputMessage', onChange: e => lastName = e.target.value })
         let modify = React.createElement('input', { onClick: sendModification, type: 'button', className: 'confirmModifBtn', value: 'Confirmer' })
@@ -41,7 +44,7 @@ const User = () => {
         
     }
 
-
+    // display the user's posts
     useEffect(() => {
         axios.get(`http://localhost:8080/api/post/${user.userId}`, {
             headers: {'Authorization' : `Bearer ${token}`}

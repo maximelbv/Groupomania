@@ -7,8 +7,11 @@ import user from '../../utils/currentUser';
 import { Form } from 'react-bootstrap';
 import './Home.scss';
 
+// Home component : is the main page of the site, display the posts/post actions and comments/comments actions
+
 const Home = () => {
 
+    // first check if the user is connected, if not : redirect him to the login page
     useEffect(() => {
         if (!token) {navigate('./login')}
     }, []);
@@ -21,18 +24,17 @@ const Home = () => {
     const [posts, setPosts] = useState();
     var bodyFormData = new FormData();
     
-    console.log(bodyFormData)
-    
-    
+
+    // triggered on the 'send post' button
     let sendPost = () => {
 
+        // set the inputs values in the bodyFormData
         bodyFormData.set('userId', user.userId); 
         bodyFormData.set('author', `${user.firstName} ${user.lastName}`); 
         bodyFormData.set('message', message); 
         bodyFormData.set('picture', image); 
 
-        console.log('image', image)
-
+        // request the API to post the bodyFormData
         return axios.post('http://localhost:8080/api/post/post', bodyFormData, {
             headers: {'Authorization' : `Bearer ${token}`, 'Content-Type': 'multipart/form-data'}
         })
@@ -41,7 +43,8 @@ const Home = () => {
         })
         .catch(err => console.log(err))
     }
-        
+    
+    // get all the posts
     useEffect(() => {
         axios.get('http://localhost:8080/api/post/getAll', {
             headers: {'Authorization' : `Bearer ${token}`}

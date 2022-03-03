@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import './Hero.scss'
 import logo from '../../assets/img/icon-left-font-monochrome-black.svg';
 import illustration from '../../assets/img/undraw_in_the_office_re_jtgc.svg';
-import illustrationReflect from '../../assets/img/Reflex.svg';
+
+// Hero component: display the blue box withe the illustration on the login and signup views
+// a 'hero' in UI design is a sort of header that informs the user what he is browsing
 
 const Hero = () => {
     return (

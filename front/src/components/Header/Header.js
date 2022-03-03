@@ -4,6 +4,7 @@ import './Header.scss';
 import logo from '../../assets/img/icon.svg';
 import axios from 'axios';
 
+// Display the header
 
 const Header = () => {
 
@@ -21,6 +22,7 @@ const Header = () => {
         }
     }
 
+    // delete account function : triggered on click of the 'delete account' button
     const deleteAccount = () => {
         axios.delete(`http://localhost:8080/api/auth/delete/${user.userId}`)
             .then(() => {
@@ -38,11 +40,9 @@ const Header = () => {
                     <p className='logotxt'>Groupomania</p>
                 </a>
 
-
                 <div className='dropDown'>
 
-                    <button onClick={() => {document.getElementById('userSettings').classList.toggle('show')}} className='dropDownTrigger'>
-                        
+                    <button onClick={() => {document.getElementById('userSettings').classList.toggle('show')}} className='dropDownTrigger'>                  
                         {user.firstName && user.firstName.substring(0, 1)}
                     </button>
                     

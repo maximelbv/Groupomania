@@ -7,12 +7,13 @@ const prisma = new PrismaClient();
 
 export async function post (req, res) {
 
+    // get the request data and put it in variables( use uuid for the postId)
+    // if there is a file in the request, define the picture as a link where she is stocked
     const postId = uuidv4();
     const { userId, author, message } = req.body;
     const picture = req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '';
 
-    console.log('req', req.file);
-
+    //create the post
     await prisma.user_post.create({
         data: {
             postId,
@@ -32,6 +33,7 @@ export async function post (req, res) {
 } 
 
 export async function getAll (req, res) {
+    // get all the posts in the DB and order them ascending
     await prisma.user_post.findMany({
         orderBy: [
             {
@@ -46,10 +48,12 @@ export async function getAll (req, res) {
 } 
 
 export async function modifyPost(req, res) {
-    console.log(req.body);
+    // get the request data and put it in variables( use uuid for the postId)
+    // if there is a file in the request, define the picture as a link where she is stocked
     const message = req.body.message;
     let picture;
     if (req.file) picture = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    // update the post in the DB
     await prisma.user_post.update({
         where: {
             postId : req.params.postId
@@ -62,19 +66,21 @@ export async function modifyPost(req, res) {
     .then(() => {
         res.send('post modifié')
     })
+    .catch(e => res.send(e))
 }
 
 export async function deletePost (req, res) {
+    // delete the user in the DB
     await prisma.user_post.delete({
         where: {
             postId: req.params.postId,
         },
     })
         .then(res => {
-            if (res.picture !== '') {                
+            if (res.picture !== '') {      
+                // delete the picture stocked in ./images          
                 fs.unlink(res.picture.replace('http://localhost:8080/images/', 'images/'), err => {
-                    if (err) {console.log(err)}
-                    else {console.log('image supprimée')}
+                    if (err) {res.send(err)}
                 });
             }
             res.send('Post supprimé')
@@ -83,6 +89,7 @@ export async function deletePost (req, res) {
 }
 
 export async function getAllFromUser (req, res) {
+    // find posts that refeers to the user 
     await prisma.user_post.findMany({
         where : {
             userId : req.params.userId

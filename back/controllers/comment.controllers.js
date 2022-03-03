@@ -6,9 +6,11 @@ const prisma = new PrismaClient();
 
 export async function post (req, res) {
 
+    // put request data in variables
     const commentId = uuidv4();
     const { postId, userId, author, message } = req.body;
 
+    // create the comment in the DB 
     await prisma.user_comment.create({
         data: {
             commentId,
@@ -28,6 +30,7 @@ export async function post (req, res) {
 } 
 
 export async function getAll (req, res) {
+    // get all the comments that refeers to the post asked (order them by date ascending)
     await prisma.user_comment.findMany({
         where : {postId: req.params.postId},
         orderBy: [
@@ -43,6 +46,7 @@ export async function getAll (req, res) {
 } 
 
 export async function modifyComment(req, res) {
+    // get the request message and update the comment in the DB
     const message = req.body.message;
     await prisma.user_comment.update({
         where: {
@@ -58,6 +62,7 @@ export async function modifyComment(req, res) {
 }
 
 export async function deleteComment (req, res) {
+    // delete the comment in the database
     await prisma.user_comment.delete({
         where: {
             commentId: req.params.commentId,

@@ -5,17 +5,23 @@ import ReactDOM from 'react-dom';
 import user from '../../utils/currentUser';
 import './Post.scss';
 
+// Post component : used to display the posts with the Home component props (p)
+
 const Post = ({p, i}) => {
 
   let comment = '';
+  // create the formData that will be used as data for the post function
+  // form data is used to handle images upload
   var bodyFormData = new FormData();
 
   const [comments, setComments] = useState();
 
   const token = localStorage.getItem('userToken');
 
+  // used on formatDate function
   function padTo2Digits(num) {return num.toString().padStart(2, '0');}
 
+  // used to modify the date format
   function formatDate(date) {
     return [
       padTo2Digits(date.getDate()),
@@ -24,8 +30,10 @@ const Post = ({p, i}) => {
     ].join('/');
   }
 
+  // triggered on click of the 'send comment' button 
   const sendComment = () => {
 
+    // define the data of the comment
       let data = {
         postId: p.postId,
         userId: user.userId,
@@ -33,6 +41,7 @@ const Post = ({p, i}) => {
         message: comment,
       }
 
+      // request the API to post the comment with the the data just above
       axios.post(`http://localhost:8080/api/comment/post`, data, {
         headers: {'Authorization' : `Bearer ${token}`}
       })
@@ -40,18 +49,19 @@ const Post = ({p, i}) => {
       .catch(e => console.log(e))
   }
 
+  // modify post function : triggered on click of the modify button (see the useEffect function)
   const modifyPost = () => {
     let msg = p.message;
     let img = p.picture;
     const sendPost = () => {
 
-      
-
+      // set the message and image from input values in the bodyFormData
       bodyFormData.set('message', msg);
       bodyFormData.set('picture', img);
   
       let id = p.postId;
 
+      // request the API to modify the post with the data of bodyFormData
       axios.put(`http://localhost:8080/api/post/${id}`, bodyFormData, {
         headers: {'Authorization' : `Bearer ${token}`}
       })
@@ -59,8 +69,9 @@ const Post = ({p, i}) => {
         .catch(e => console.log(e))  
     }
 
+    // when the user clicked the button, it will display the text input, the file input and the send button
     let message = React.createElement('input', { defaultValue: p.message,type: 'textarea', className: 'inputMessage', onChange: e => msg = e.target.value })
-    let image = React.createElement('input', { type: 'file', className: 'inputFile', onChange: e => img = e.target.files[0] })
+    let image = React.createElement('input', { type: 'file', accept: '.jpg, .jpeg, .png, .gif', className: 'inputFile', onChange: e => img = e.target.files[0] })
     let send = React.createElement('input', { onClick: sendPost, type: 'button', className: 'confirmModifBtn', value: 'Confirmer' })
     ReactDOM.render(
       [message, image, send],
@@ -69,6 +80,7 @@ const Post = ({p, i}) => {
     
   }
   
+  // delete post function : triggered on click of the delete button (see the useEffect function)
   const deletePost = () => {
     let id = p.postId; 
     axios.delete(`http://localhost:8080/api/post/${id}`, {
@@ -79,7 +91,8 @@ const Post = ({p, i}) => {
 
   }
   
-  // display edit / delete buttons if you are the owner of the post
+  // Check if the ID of the user connected correspond to the post userId
+  // if it correspond, create the modify and delete buttons, assign them modify & delete functions that are just above
   useEffect(() => {
 
     if (p.userId === JSON.parse(localStorage.getItem('user')).userId) { 

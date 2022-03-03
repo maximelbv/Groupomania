@@ -6,16 +6,14 @@ import '../../styles/forms.scss'
 import shape from '../../assets/img/Shape.svg';
 import axios from 'axios';
 
-
-// ❗️ data validation avec regex
-// ❗️ submit disabled tant que les entrées sont pas conformes
-// ❗️ redirection vers la page d'accueil quand réussite
-// ❗️ display des erreures 
+// Signup form component : displayed on the signup view with the hero component
 
 const SignupForm = () => {
 
+    // react hook used to navigate 
     let navigate = useNavigate();
 
+    // define the info object that will be used on the signup API request
     let info = {
         firstName: '',
         lastName: '',
@@ -23,10 +21,13 @@ const SignupForm = () => {
         password: '',
     };
 
+    // triggered on click of the submit form button
     let createAccount = () => {
-                   
+        // request the API to signup the user
         return axios.post('http://localhost:8080/api/auth/signup', info)
             .then((res) => {
+                // if the response status is 210 (exress validator errors) loop the errors and push them in 
+                // the error array, and display the error array
                 if (res.status === 210) {
                     let errors = []
                     for (let i=0;i<res.data.errors.length;i++) {
@@ -36,14 +37,16 @@ const SignupForm = () => {
                         errors,
                         document.querySelector('.errors')
                     )
-                    
+                // the 211 status error means a specific error : 'already used email'
+                // display this error if the response status is 211    
                 } else if (res.status === 211) {
-                    let emailAlreadyUsed = React.createElement('p', {}, res.data.error)
+                    console.log(res);
+                    let emailAlreadyUsed = React.createElement('p', {}, 'Adresse mail déjà utilisée')
                     ReactDOM.render(
                         emailAlreadyUsed,
                         document.querySelector('.errors')
                     )
-                    
+                // if everything is good, navigate to login
                 } else {
                     navigate("/login");
                 }

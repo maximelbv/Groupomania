@@ -1,3 +1,5 @@
+// create the user object that contains the user data from the local storage
+
 let user = '';
 
 if (localStorage.getItem('user')) {

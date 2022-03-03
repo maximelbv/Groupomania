@@ -15,10 +15,7 @@ function App() {
         <Route path = "/" element={<Home />}/>
         <Route path = "signup" element={<Signup />}/>
         <Route path = "login" element={<Login />}/>
-
         <Route path = "user" element={<User />}/>
-        <Route path="user/edit" />
-
         <Route path='*' element={<NotFound />}/>
       </Routes>
     </BrowserRouter>
