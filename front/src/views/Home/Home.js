@@ -59,10 +59,11 @@ const Home = () => {
             <Header />
 
             <form className='setPostContainer'>
-                <input className='message' type='longtext' rows='250' cols='50' defaultValue={bodyFormData.message} onChange={e =>  message = e.target.value}></input>
+                <label for='message'>Poster</label>
+                <input name='message' id='message' className='message' type='longtext' rows='250' cols='50' defaultValue={bodyFormData.message} onChange={e =>  message = e.target.value}></input>
 
                 <Form.Group controlId="formFile" className="mb-3">
-                    <Form.Label></Form.Label>
+                    <Form.Label>Ajouter une image</Form.Label>
                     <Form.Control type="file" accept='.jpg, .jpeg, .png, .gif' defaultValue={bodyFormData.picture} onChange={e => image = e.target.files[0]} />
                 </Form.Group>
                 
@@ -72,7 +73,7 @@ const Home = () => {
             <div className='postsContainer'>
                 
                 {posts !== undefined ? posts.map((p, i) => {
-                    return <Post p={p} key={i} />
+                    return <Post p={p} key={`post${i}`} />
                 }) : null}
 
             </div>

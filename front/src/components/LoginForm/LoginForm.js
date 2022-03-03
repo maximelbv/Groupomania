@@ -44,7 +44,7 @@ const Loginform = () => {
                 } else if (res.data.msg === 'Login success') {
                     await localStorage.setItem('userToken', res.data.token);
                     await localStorage.setItem('user', JSON.stringify(res.data.user));
-                    const element = <div id='validationGif'><img src={validationGif} width="250px"/><p><span className='bonjour'>Bonjour</span><br/><span className='user'>{res.data.user.firstName}</span></p></div>
+                    const element = <div id='validationGif'><img src={validationGif} width="250px" alt='validation' /><p><span className='bonjour'>Bonjour</span><br/><span className='user'>{res.data.user.firstName}</span></p></div>
                     
                     ReactDOM.render(element, document.getElementById('loginCtn'));
                     setTimeout(() => {window.location.assign('/');}, 2000)
@@ -61,7 +61,7 @@ const Loginform = () => {
             <h1>Groupomania</h1>
         </div>
         
-        <img className ='logoIllustration' src={shape}></img>
+        <img className ='logoIllustration' src={shape} alt='groupomania logo'></img>
         
         <form className='LoginForm' id='loginForm'>
 
@@ -76,7 +76,7 @@ const Loginform = () => {
 
             
             <label className='password'>Mot de passe 
-                <input id='password' type='password' defaultValue={login.password} onChange={e => login.password = e.target.value}></input>
+                <input autoComplete="on" id='password' type='password' defaultValue={login.password} onChange={e => login.password = e.target.value}></input>
             </label>
 
             <div className='errors'></div>

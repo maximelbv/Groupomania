@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './Comment.scss';
 
 // The comment component is used to display comments with Post.js component props (c)
 
-export default function Comment({c, i}) {
+export default function Comment({c, k}) {
 
     const token = localStorage.getItem('userToken');
 
@@ -68,8 +68,8 @@ export default function Comment({c, i}) {
     useEffect(() => {
 
         if (c.userId === JSON.parse(localStorage.getItem('user')).userId) { 
-        let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn' }, '');
-        let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn' }, '');
+        let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn', name: 'modifyBtn' }, '');
+        let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn', name: 'deleteBtn' }, '');
         ReactDOM.render(
             [modifyBtn, deleteBtn],
             document.getElementById(c.commentId)
@@ -79,7 +79,7 @@ export default function Comment({c, i}) {
     }, [])
 
   return (
-    <div id={'commentCtn' + c.commentId} className='Comment' key={i}>
+    <div id={'commentCtn' + c.commentId} className='Comment' key={`comment${k}`}>
 
         <div className='userInfos'>
 

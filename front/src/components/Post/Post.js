@@ -96,8 +96,8 @@ const Post = ({p, i}) => {
   useEffect(() => {
 
     if (p.userId === JSON.parse(localStorage.getItem('user')).userId) { 
-      let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn' }, '');
-      let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn' }, '');
+      let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn', name: 'modification button' }, '');
+      let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn', name: 'modification button' }, '');
       ReactDOM.render(
         [modifyBtn, deleteBtn],
         document.getElementById(p.postId)
@@ -117,7 +117,7 @@ const Post = ({p, i}) => {
     }, [])
 
   return (
-    <div id={'postCtn' + p.postId} className='Post' key={i}>
+    <div id={'postCtn' + p.postId} className='Post' key={`post${i}`}>
 
         <div className='userInfos'>
 
@@ -133,7 +133,7 @@ const Post = ({p, i}) => {
         </div>
 
         <p id={'message' + p.postId}>{p.message}</p>
-        {p.picture !== '' && <img width='100%' height='auto' src={p.picture}></img>}
+        {p.picture !== '' && <img width='100%' height='auto' src={p.picture} alt='post image'></img>}
 
         <div id={p.postId} className='deleteModifyCtn'></div>
 
@@ -146,8 +146,8 @@ const Post = ({p, i}) => {
             <input   className='postCommentBtn' type='button' value='Poster' onClick={sendComment}></input>
           </form>
                 
-          {comments !== undefined ? comments.map((c, i) => {
-              return <Comment c={c} key={i} />
+          {comments !== undefined ? comments.map((c, k) => {
+              return <Comment c={c} key={`comment${k}`} />
           }) : null}
 
         </div>

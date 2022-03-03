@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Home from "./views/Home/Home";
 import NotFound from "./views/NotFound/NotFound";
 import Signup from './views/Signup/Signup';

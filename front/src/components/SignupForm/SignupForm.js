@@ -85,7 +85,7 @@ const SignupForm = () => {
 
                 
                 <label className='passwordLabel' >Mot de passe 
-                    <input id='password' type='password' defaultValue={info.password} onChange={e => info.password = e.target.value} ></input>
+                    <input autoComplete="on" id='password' type='password' defaultValue={info.password} onChange={e => info.password = e.target.value} ></input>
                 </label>
 
                 <div className='agreeTerms'>      
