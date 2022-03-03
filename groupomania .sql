@@ -21,9 +21,6 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `groupomania`
 --
-
-CREATE DATABASE IF NOT EXISTS groupomania;
-
 -- --------------------------------------------------------
 
 --

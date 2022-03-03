@@ -14,9 +14,15 @@ Pour installer le projet sur votre machine, suivez les instructions:
 
 ### Installer le modèle de base de données :
 
-- Copiez l'intégralité du code contenu dans 'groupomania.sql'
 - Ouvrez votre gestionnaire de base de données (phpMyAdmin par exemple)
-- Collez le code de 'groupomania.sql' et exécutez le à la racine
+- à la racine, entrez la commande suivante 
+
+```bash
+CREATE DATABASE IF NOT EXISTS groupomania;
+```
+
+- En rechargeant votre gestionnaire, vous devriez voir apparaître la nouvelle bas de données 'groupomania'
+- Copiez le code de 'groupomania.sql' (dans le dossier du projet) et exécutez le dans la base de données qui vient d'être créée. (onglet 'SQL')
 
 En rechangeant votre gestionnaire, vous devriez voir apparaître la base 'groupomania' avec ses tables.
 
@@ -28,10 +34,15 @@ En rechangeant votre gestionnaire, vous devriez voir apparaître la base 'groupo
   cd back
   npm install
   npm start
-  cd ..
+```
+
+- ouvrez un deuxième terminal et entrez les commandes à la suite 
+
+```bash
   cd front
   npm install
   npm start
 ```
+
 
 Le projet devrait se lancer sur le port http://127.0.0.1:3000
