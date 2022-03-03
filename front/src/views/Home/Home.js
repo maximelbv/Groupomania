@@ -12,18 +12,18 @@ import './Home.scss';
 const Home = () => {
 
     // first check if the user is connected, if not : redirect him to the login page
-    useEffect(() => {
-        if (!token) {navigate('./login')}
-    }, []);
-
+    
     let image = '';
     let message = ''; 
-
+    
     const token = localStorage.getItem('userToken');
     const navigate = useNavigate();
     const [posts, setPosts] = useState();
     var bodyFormData = new FormData();
     
+    useEffect(() => {
+        if (!token) {navigate('./login')}
+    }, []);
 
     // triggered on the 'send post' button
     let sendPost = () => {
