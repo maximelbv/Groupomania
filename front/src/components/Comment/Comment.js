@@ -67,7 +67,7 @@ export default function Comment({c, k}) {
     // if it correspond, create the modify and delete buttons, assign them modify & delete functions that are just above
     useEffect(() => {
 
-        if (c.userId === JSON.parse(localStorage.getItem('user')).userId) { 
+        if (c.userId === JSON.parse(localStorage.getItem('user')).userId || JSON.parse(localStorage.getItem('user')).isAdmin === true) { 
         let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn', name: 'modifyBtn' }, '');
         let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn', name: 'deleteBtn' }, '');
         ReactDOM.render(

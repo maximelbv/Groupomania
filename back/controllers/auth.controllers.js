@@ -17,7 +17,7 @@ export function signupPost(req, res) {
         // put the request data in variables (also pass the userId in uuid, and password in bcrypt)
         // and create the employee in the database
         const userId = uuidv4();
-        const { firstName, lastName, email, password } = req.body;
+        const { firstName, lastName, email, password, isAdmin } = req.body;
 
         return bcrypt.hash(password, 10)
             .then(async (hash) => {
@@ -28,6 +28,7 @@ export function signupPost(req, res) {
                         lastName,
                         email,
                         password: hash,
+                        isAdmin,
                     }
                 })
                 return res.status(200).json({

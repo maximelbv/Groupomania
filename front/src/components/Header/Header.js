@@ -24,11 +24,19 @@ const Header = () => {
 
     // delete account function : triggered on click of the 'delete account' button
     const deleteAccount = () => {
-        axios.delete(`http://localhost:8080/api/auth/delete/${user.userId}`)
-            .then(() => {
-                console.log('ok');
-            })
-            .catch(err => console.log(err))
+
+        if (window.confirm("Vous êtes sur le point de supprimer votre compte, poursuivre?")) {   
+                   
+            axios.delete(`http://localhost:8080/api/auth/delete/${user.userId}`)
+                .then(() => {
+                    
+                })
+                .catch(err => console.log(err));
+            window.location.replace('/login')  
+        } else {
+            return
+        }
+
     }
 
     return (
@@ -51,7 +59,7 @@ const Header = () => {
                             <p className='name'>{user.firstName} {user.lastName}</p>
                         </a>
                         <a className='logout' onClick={() => {localStorage.removeItem('userToken'); localStorage.removeItem('user')} } href="/login">Déconnexion</a>
-                        <a className='deleteAccount' onClick={deleteAccount} href="/login">Supprimer le Compte</a>
+                        <a id ='deleteAccount' className='deleteAccount' onClick={deleteAccount} href="#">Supprimer le Compte</a>
                     </div>
 
                 </div>

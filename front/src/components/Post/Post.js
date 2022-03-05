@@ -95,7 +95,7 @@ const Post = ({p, i}) => {
   // if it correspond, create the modify and delete buttons, assign them modify & delete functions that are just above
   useEffect(() => {
 
-    if (p.userId === JSON.parse(localStorage.getItem('user')).userId) { 
+    if (p.userId === JSON.parse(localStorage.getItem('user')).userId || JSON.parse(localStorage.getItem('user')).isAdmin === true) { 
       let modifyBtn = React.createElement('button', { onClick: modifyPost, className: 'modifyBtn', name: 'modification button' }, '');
       let deleteBtn = React.createElement('button', { onClick: deletePost, className: 'deleteBtn', name: 'modification button' }, '');
       ReactDOM.render(

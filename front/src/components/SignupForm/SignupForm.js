@@ -19,6 +19,7 @@ const SignupForm = () => {
         lastName: '',
         email: '',
         password: '',
+        isAdmin: false
     };
 
     // triggered on click of the submit form button
