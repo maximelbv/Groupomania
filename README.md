@@ -1,4 +1,4 @@
-# Groupomania 
+![image](https://user-images.githubusercontent.com/58565963/167067876-6ca58ea7-0917-410b-a1de-21e14bda7427.png)
 
 7ème projet du parcours Développeur Web d'Open Classrooms
 
